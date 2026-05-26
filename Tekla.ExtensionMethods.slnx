@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Tekla.ExtensionMethods.Tests/Tekla.ExtensionMethods.Tests.csproj" Id="4d1d5c5f-5b63-4327-b912-96191638ec49" />
+  <Project Path="Tekla.ExtensionMethods/Tekla.ExtensionMethods.csproj" Id="73d65147-433a-42e2-bad3-01b7650b1941" />
+</Solution>
