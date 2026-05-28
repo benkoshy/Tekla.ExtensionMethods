@@ -13,7 +13,5 @@ namespace Tekla.ExtensionMethods.Tests
             CoordinateSystem cs = new CoordinateSystem();
             ClassicAssert.AreEqual(new Vector(0, 0, 1), cs.AxisZ().GetNormal());
         }
-
-
     }
 }
