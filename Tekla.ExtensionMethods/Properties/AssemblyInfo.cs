@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TeklaExtensionMethods")]
-[assembly: AssemblyDescription("A set of Extension Methods in conjunction with the Tekla Open API")]
+[assembly: AssemblyTitle("Tekla.ExtensionMethods")]
+[assembly: AssemblyDescription("A set of Extension Methods to be used with the Tekla Open API")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ben Koshy")]
 [assembly: AssemblyProduct("TeklaExtensionMethods")]
