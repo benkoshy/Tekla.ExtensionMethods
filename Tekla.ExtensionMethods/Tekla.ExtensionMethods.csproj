@@ -7,8 +7,8 @@
     <ProjectGuid>{73D65147-433A-42E2-BAD3-01B7650B1941}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TeklaExtensionMethods</RootNamespace>
-    <AssemblyName>TeklaExtensionMethodsByBenKoshy</AssemblyName>
+    <RootNamespace>Tekla.ExtensionMethods</RootNamespace>
+    <AssemblyName>Tekla.ExtensionMethods</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
