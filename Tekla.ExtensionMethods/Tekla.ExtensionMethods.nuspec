@@ -14,5 +14,9 @@
     <releaseNotes> A set of Extension and Helpers to be used with the Tekla Open API</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>Tekla API Extension Methods</tags>
+    <readme>docs\README.md</readme>
   </metadata>
+  <files>
+    <file src="..\README.md" target="docs\" />
+  </files>
 </package>
