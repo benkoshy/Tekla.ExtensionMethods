@@ -36,3 +36,17 @@ Contributions welcome!
 
 If required, add a test.
 
+
+
+
+
+### Packing Instructions
+
+
+
+In Powershell:
+
+
+
+D:\\Documents\\repositories\\TeklaProjects\\Tekla.ExtensionMethods\\Tekla.ExtensionMethods> nuget pack
+
