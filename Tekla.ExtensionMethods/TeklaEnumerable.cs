@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tekla.Structures.Catalogs;
+using Tekla.Structures.Model;
+using Tekla.Structures.Geometry3d;
 
 namespace TeklaExtensionMethods
 {
