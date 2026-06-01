@@ -46,24 +46,31 @@
     <Reference Include="System.Xml" />
     <Reference Include="Tekla.Structures, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
       <HintPath>..\packages\Tekla.Structures.2023.0.1\lib\net40\Tekla.Structures.dll</HintPath>
+      <PrivateAssets>all</PrivateAssets>
     </Reference>
     <Reference Include="Tekla.Structures.Catalogs, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
       <HintPath>..\packages\Tekla.Structures.Catalogs.2023.0.1\lib\net40\Tekla.Structures.Catalogs.dll</HintPath>
+      <PrivateAssets>all</PrivateAssets>
     </Reference>
     <Reference Include="Tekla.Structures.Datatype, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
       <HintPath>..\packages\Tekla.Structures.Datatype.2023.0.1\lib\net40\Tekla.Structures.Datatype.dll</HintPath>
+      <PrivateAssets>all</PrivateAssets>
     </Reference>
     <Reference Include="Tekla.Structures.Dialog, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
       <HintPath>..\packages\Tekla.Structures.Dialog.2023.0.1\lib\net40\Tekla.Structures.Dialog.dll</HintPath>
+      <PrivateAssets>all</PrivateAssets>
     </Reference>
     <Reference Include="Tekla.Structures.Drawing, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
       <HintPath>..\packages\Tekla.Structures.Drawing.2023.0.1\lib\net40\Tekla.Structures.Drawing.dll</HintPath>
+      <PrivateAssets>all</PrivateAssets>
     </Reference>
     <Reference Include="Tekla.Structures.Model, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
       <HintPath>..\packages\Tekla.Structures.Model.2023.0.1\lib\net40\Tekla.Structures.Model.dll</HintPath>
+      <PrivateAssets>all</PrivateAssets>
     </Reference>
     <Reference Include="Tekla.Structures.Plugins, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
       <HintPath>..\packages\Tekla.Structures.Plugins.2023.0.1\lib\net40\Tekla.Structures.Plugins.dll</HintPath>
+      <PrivateAssets>all</PrivateAssets>
     </Reference>
   </ItemGroup>
   <ItemGroup>
