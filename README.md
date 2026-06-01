@@ -10,7 +10,11 @@ Extension methods for Tekla's Open API.
 
 
 
-The API is under rapid development. Some parts are not as well developed as they should be.
+The API is under rapid development and is released as an alpha version.
+
+
+
+Breaking changes will be made as the API iterated upon.
 
 
 
@@ -18,7 +22,7 @@ The API is under rapid development. Some parts are not as well developed as they
 
 
 
-Documentation for this will follow.
+To be added.
 
 
 
@@ -31,10 +35,4 @@ Contributions welcome!
 
 
 If required, add a test.
-
-
-
-
-
-
 
