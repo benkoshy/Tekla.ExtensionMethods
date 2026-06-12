@@ -11,9 +11,17 @@ namespace TeklaExtensionMethods
             beam.EndPoint = beam.EndPoint.Transform(matrix);
         }
 
+
+        public static void TransformByMutationOperation(this Beam beam, Matrix matrix)
+        {
+            // work in progress
+            // Reference the equivalent test in BeamExtensionTests.cs
+            // beam.StartPoint = beam.StartPoint.Transform(matrix);
+            // beam.EndPoint = beam.EndPoint.Transform(matrix);
+        }
+
         public static Beam CloneByProperties(this Beam beam)
         {
-            
             // Note: the identifier is not cloned.
             Beam newBeam = new Beam();
             newBeam.AssemblyNumber = beam.AssemblyNumber;

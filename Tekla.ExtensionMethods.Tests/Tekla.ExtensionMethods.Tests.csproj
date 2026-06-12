@@ -76,6 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BeamExtensionTests.cs" />
     <Compile Include="CoordinateSystemTests.cs" />
     <Compile Include="GeometricPlaneExtensionsTest.cs" />
     <Compile Include="GridExtensionsTest.cs" />
