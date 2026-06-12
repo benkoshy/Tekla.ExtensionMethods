@@ -25,8 +25,11 @@ Contributions welcome!
 
 If required, add a test.
 
-### Packing Instructions
+### Maintainer - Packing Instructions
+
 In Powershell:
 
-D:\\Documents\\repositories\\TeklaProjects\\Tekla.ExtensionMethods\\Tekla.ExtensionMethods> nuget pack
+```powershell
+D:\\Documents\\repositories\\TeklaProjects\\Tekla.ExtensionMethods\\Tekla.ExtensionMethods> nuget pack -Symbols -SymbolPackageFormat snupkg
+```
 
