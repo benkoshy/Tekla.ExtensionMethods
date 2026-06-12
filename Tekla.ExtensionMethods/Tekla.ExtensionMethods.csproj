@@ -32,6 +32,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+<PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+</PropertyGroup>
   <PropertyGroup>
       <PackageReadmeFile>..\README.md</PackageReadmeFile>
   </PropertyGroup>
