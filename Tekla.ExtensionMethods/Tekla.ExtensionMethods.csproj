@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" /> 
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -32,15 +32,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-<PropertyGroup>
+  <PropertyGroup>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-</PropertyGroup>
+  </PropertyGroup>
   <PropertyGroup>
-      <PackageReadmeFile>..\README.md</PackageReadmeFile>
+    <PackageReadmeFile>..\README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
-      <None Include="docs\readme.md" Pack="true" PackagePath=""/>
+    <None Include="docs\readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
   <PropertyGroup>
     <PackageIcon>icon.png</PackageIcon>
@@ -60,34 +60,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tekla.Structures, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tekla.Structures.2023.0.1\lib\net40\Tekla.Structures.dll</HintPath>
-      <PrivateAssets>all</PrivateAssets>
-    </Reference>
-    <Reference Include="Tekla.Structures.Catalogs, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tekla.Structures.Catalogs.2023.0.1\lib\net40\Tekla.Structures.Catalogs.dll</HintPath>
-      <PrivateAssets>all</PrivateAssets>
-    </Reference>
-    <Reference Include="Tekla.Structures.Datatype, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tekla.Structures.Datatype.2023.0.1\lib\net40\Tekla.Structures.Datatype.dll</HintPath>
-      <PrivateAssets>all</PrivateAssets>
-    </Reference>
-    <Reference Include="Tekla.Structures.Dialog, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tekla.Structures.Dialog.2023.0.1\lib\net40\Tekla.Structures.Dialog.dll</HintPath>
-      <PrivateAssets>all</PrivateAssets>
-    </Reference>
-    <Reference Include="Tekla.Structures.Drawing, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tekla.Structures.Drawing.2023.0.1\lib\net40\Tekla.Structures.Drawing.dll</HintPath>
-      <PrivateAssets>all</PrivateAssets>
-    </Reference>
-    <Reference Include="Tekla.Structures.Model, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tekla.Structures.Model.2023.0.1\lib\net40\Tekla.Structures.Model.dll</HintPath>
-      <PrivateAssets>all</PrivateAssets>
-    </Reference>
-    <Reference Include="Tekla.Structures.Plugins, Version=2023.0.0.0, Culture=neutral, PublicKeyToken=2f04dbe497b71114, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tekla.Structures.Plugins.2023.0.1\lib\net40\Tekla.Structures.Plugins.dll</HintPath>
-      <PrivateAssets>all</PrivateAssets>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BeamExtensions.cs" />
@@ -116,8 +88,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Tekla.Structures">
+      <Version>2023.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Tekla.Structures.Catalogs">
+      <Version>2023.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Tekla.Structures.Datatype">
+      <Version>2023.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Tekla.Structures.Dialog">
+      <Version>2023.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Tekla.Structures.Drawing">
+      <Version>2023.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Tekla.Structures.Model">
+      <Version>2023.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Tekla.Structures.Plugins">
+      <Version>2023.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
