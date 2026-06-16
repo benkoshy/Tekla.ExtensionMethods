@@ -164,7 +164,7 @@ namespace TeklaExtensionMethods
         public static IEnumerable<GeometricPlane> GetXGridPlanes(this TSM.Grid grid)
         {
             Tekla.Structures.Geometry3d.CoordinateSystem gridCs = grid.GetCoordinateSystem();
-            Matrix transformation = grid.GetCoordinateSystem().ToGlobalCoordinateSystem();
+            Matrix transformation = grid.GetCoordinateSystem().ToWorldCoordinateSystem();
             Vector normalVector = gridCs.AxisX;
 
             var xgridplanes = grid.XAxisLocalCoordinates()
@@ -177,7 +177,7 @@ namespace TeklaExtensionMethods
         public static IEnumerable<GeometricPlane> GetYGridPlanes(this TSM.Grid grid)
         {
             Tekla.Structures.Geometry3d.CoordinateSystem gridCs = grid.GetCoordinateSystem();
-            Matrix transformation = grid.GetCoordinateSystem().ToGlobalCoordinateSystem();
+            Matrix transformation = grid.GetCoordinateSystem().ToWorldCoordinateSystem();
             Vector normalVector = gridCs.AxisY;
 
             var yGridPlanes = grid.YAxisLocalCoordinates()
@@ -191,7 +191,7 @@ namespace TeklaExtensionMethods
         public static IEnumerable<GeometricPlane> GetZGridPlanes(this TSM.Grid grid)
         {
             Tekla.Structures.Geometry3d.CoordinateSystem gridCs = grid.GetCoordinateSystem();
-            Matrix transformation = grid.GetCoordinateSystem().ToGlobalCoordinateSystem();
+            Matrix transformation = grid.GetCoordinateSystem().ToWorldCoordinateSystem();
             Vector normalVector = gridCs.AxisZ();
 
             var zGridPlanes = grid.ZAxisLocalCoordinates()
@@ -213,7 +213,7 @@ namespace TeklaExtensionMethods
 
         public static Matrix ToGlobalCoordinateSystem(this TSM.Grid grid)
         {
-            return grid.GetCoordinateSystem().ToGlobalCoordinateSystem();
+            return grid.GetCoordinateSystem().ToWorldCoordinateSystem();
         }
 
         public static Matrix ToLocalFromGlobalCoordinateSystem(this TSM.Grid grid)

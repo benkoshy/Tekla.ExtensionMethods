@@ -29,7 +29,7 @@ namespace TeklaExtensionMethods.Wrappers
         public IEnumerable<GeometricPlane> GetXGridPlanes()
         {
             Tekla.Structures.Geometry3d.CoordinateSystem gridCs = grid.GetCoordinateSystem();
-            Matrix transformation = grid.GetCoordinateSystem().ToGlobalCoordinateSystem();
+            Matrix transformation = grid.GetCoordinateSystem().ToWorldCoordinateSystem();
             Vector normalVector = gridCs.AxisX;
 
             var xgridplanes = this.XAxisLocalCoordinates()
@@ -43,7 +43,7 @@ namespace TeklaExtensionMethods.Wrappers
         public IEnumerable<GeometricPlane> GetYGridPlanes()
         {
             Tekla.Structures.Geometry3d.CoordinateSystem gridCs = grid.GetCoordinateSystem();
-            Matrix transformation = grid.GetCoordinateSystem().ToGlobalCoordinateSystem();
+            Matrix transformation = grid.GetCoordinateSystem().ToWorldCoordinateSystem();
             Vector normalVector = gridCs.AxisY;
 
             var yGridPlanes = this.YAxisLocalCoordinates()
@@ -56,7 +56,7 @@ namespace TeklaExtensionMethods.Wrappers
         public IEnumerable<GeometricPlane> GetZGridPlanes()
         {
             Tekla.Structures.Geometry3d.CoordinateSystem gridCs = grid.GetCoordinateSystem();
-            Matrix transformation = grid.GetCoordinateSystem().ToGlobalCoordinateSystem();
+            Matrix transformation = grid.GetCoordinateSystem().ToWorldCoordinateSystem();
             Vector normalVector = gridCs.AxisZ();
 
             var zGridPlanes = this.ZAxisLocalCoordinates()

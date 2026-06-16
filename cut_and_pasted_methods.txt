@@ -1,0 +1,39 @@
+
+https://stackoverflow.com/questions/2055422/how-to-implement-iequalitycomparerpointf-with-tolerance
+
+
+How Tekla's Beam orientation is calculated: reference to the calculation
+
+https://discourse.mcneel.com/t/plane-frame-normal-orientation-beams/150653/3
+
+
+Tekla api how the y and z vectors of a beam are calculated
+
+Google is pretty good on this point:
+
+https://www.google.com/search?q=Tekla+api+how+the+y+and+z+vectors+of+a+beam+are+calculated&sca_esv=4dc9a082a571228b&rlz=1C1VDKB_enAU1114AU1114&biw=1920&bih=911&sxsrf=APpeQnu8iRVtztOgCsZMFvFwjjUmoQzzyg%3A1782292635816&ei=m6A7aryYMcKk2roPn7u0gQI&ved=0ahUKEwj80cW7xZ-VAxVCklYBHZ8dLSAQ4dUDCBI&uact=5&oq=Tekla+api+how+the+y+and+z+vectors+of+a+beam+are+calculated&gs_lp=Egxnd3Mtd2l6LXNlcnAiOlRla2xhIGFwaSBob3cgdGhlIHkgYW5kIHogdmVjdG9ycyBvZiBhIGJlYW0gYXJlIGNhbGN1bGF0ZWQyCBAAGIAEGKIEMgUQABjvBTIFEAAY7wUyBRAAGO8FMgUQABjvBUjWDFDyB1jbCnABeAGQAQCYAdcBoAGOBqoBBTAuMy4xuAEDyAEA-AEBmAICoAK4AcICChAAGEcY1gQYsAOYAwCIBgGQBgiSBwMxLjGgB9YOsgcDMC4xuAe0AcIHBTAuMS4xyAcFgAgB&sclient=gws-wiz-serp
+
+
+
+ The API calculates the new \(Y\) and \(Z\) vectors of the beam by rotating them around the \(X\)-axis
+
+
+beamY vector needs to be: {(-288.675, 408.248, 866.025)}
+
+beam2CS.AxisY
+{(-288.675, 408.248, 866.025)}
+    X: -288.67513512168352
+    Y: 408.24829017208646
+    Z: 866.02540374635987
+
+
+beam2CS.AxisY.GetNormal()
+{(-0.707, 0.000, 0.707)}
+    X: -0.70710678118654757
+    Y: 8.5265128291212024E-17
+    Z: 0.70710678118654746
+
+
+XCrossY_ReturnsZ()
+YCrossZ_ReturnsX()
+ZCrossX_ReturnsY
