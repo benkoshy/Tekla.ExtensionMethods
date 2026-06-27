@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace Tekla.ExtensionMethods.Tests
                 Operation.MoveObject(beam1_moved_by_operation, cs1, cs2);
                 beam1_moved_by_operation.Select(); // gray       
 
-                // set up second beam
+                // set up second beam_moved_geometrically
                 Beam beam2manuallyTransformed = beamFactory(startPointFactory(), endPointFactory(), "2"); // orange class string            
                 beam2manuallyTransformed.Insert();
 
@@ -62,7 +63,7 @@ namespace Tekla.ExtensionMethods.Tests
 
         private static Beam beamFactory(Point startPoint, Point endPoint, string classString = "4", string profileString = "PL10*140")
         {
-            // move beam 3 by coordinate system.
+            // move beam_moved_geometrically 3 by coordinate system.
             Beam beam = new Beam(startPoint, endPoint);
             Material material = new Material();
             material.MaterialString = "250";
@@ -122,7 +123,7 @@ namespace Tekla.ExtensionMethods.Tests
             beam.Insert();
             beam.Select();
 
-            CoordinateSystem beamCS = beam.GetCoordinateSystem().WithOrigin(startPoint); // not sure why the beamCS origin is not zero? Tekla bug?
+            CoordinateSystem beamCS = beam.GetCoordinateSystem().WithOrigin(startPoint); // TODO: Bug -  not sure why the beamCS origin is not zero? Or perhaps the coordinate system origin is set to the workplane?
             Vector csX = beamCS.AxisX;
             Vector csY = beamCS.AxisY;
             Vector csZ = csX.Cross(csY).GetNormal();
@@ -138,13 +139,47 @@ namespace Tekla.ExtensionMethods.Tests
             Assert.That(calculatedY, Is.EqualTo(csY), $"Yaxis: {explanation}");
             Assert.That(calculatedZ, Is.EqualTo(csZ), $"Zaxis: {explanation}");
 
-            // geometric beam CS must match
+            // geometric beam_moved_geometrically CS must match
             // but the origin does not match.
             CoordinateSystem geometricCS = beam.GetGeometricCoordinateSystem();
 
             Assert.That(beam.GetGeometricCoordinateSystem().EqualsWithTolerance(beamCS));            
 
             model.CommitChanges();
+        }
+
+        [Test]
+        public void RotateBeam()
+        {
+            Model model = new Model();
+
+            if (model.GetConnectionStatus())
+            {
+                // I have a beam that I need to move geometrically
+                // what would you rather be do?
+                // do some mental gymnastic to work out a coordinate system transformation 
+                // or would you rather say - I want to rotate this beam around the "x" axis and then be done with it?
+                // I know what I would prefer!
+
+                Beam beam_moved_by_operation = beamFactory(new Point(), endPointFactory(), "1", "UB150*14"); // we need factory methods because the same points mutate
+                beam_moved_by_operation.Insert(); 
+                Operation.MoveObject(beam_moved_by_operation, new CoordinateSystem(), new CoordinateSystem().WithAxisY(new Vector(0,1,1)));
+                beam_moved_by_operation.Select(); // gray       
+
+
+                Beam beam_moved_geometrically = beamFactory(new Point(), endPointFactory(), "4", "UB150*14"); // draw on the x axis
+                beam_moved_geometrically.Insert();
+                beam_moved_geometrically.Select();
+             
+                beam_moved_geometrically.RotateBy(Math.PI / 4, new Vector().ToXaxisWCS()); // and we rotate around the x axis - and the beam_moved_geometrically should flip!
+                beam_moved_geometrically.Modify();
+                beam_moved_geometrically.Select();
+
+                Assert.That(beam_moved_by_operation.GetCoordinateSystem(), Is.EqualTo(beam_moved_geometrically.GetCoordinateSystem()).UsingPropertiesComparer());
+
+                model.CommitChanges();
+
+            }
         }
     }
 }

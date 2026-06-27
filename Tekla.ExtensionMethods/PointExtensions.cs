@@ -73,9 +73,28 @@ namespace TeklaExtensionMethods
             return new Point(point.X, point.Y, z);
         }
 
+        public static Point ToZero(this Point point)
+        {
+            return new Point(0,0,0);
+        }
+
         public static Point Transform(this Point point, Matrix matrix)
         {
             return matrix.Transform(point);
+        }
+
+        /// <summary>
+        /// Is a helper 
+        /// Returns a rotation matrix in a Clockwise rotation around the given rotation axis, defined by the given angle and the given rotation axis.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="rotationAngleInRadians"></param>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        public static Point RotateBy(this Point p, double rotationAngleInRadians, Vector a)
+        {
+            Matrix matrix = MatrixFactory.Rotate(rotationAngleInRadians, a);
+            return p.Transform(matrix);
         }
     }
 }

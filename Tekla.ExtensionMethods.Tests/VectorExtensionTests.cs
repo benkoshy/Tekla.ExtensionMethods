@@ -79,6 +79,17 @@ namespace Tests
         }
 
         [Test]
+        public void Rejection_345_return_4()
+        {
+            Vector a = new Vector(3, 4, 0);
+            Vector b = new Vector(1, 0, 0);
+
+            Vector rejection = a.RejectFrom(b);
+
+            Assert.That(rejection, Is.EqualTo(new Vector(0,4,0)));
+        }
+
+        [Test]
         public void TestGetVectorTo()
         {
             Point origin = new Point(0, 0, 0);
@@ -226,14 +237,5 @@ namespace Tests
         }
 
         #endregion       
-
-        [Test]
-        public void ProjectOnto_Returns_3()
-        {
-            Vector a = new Vector(3,4,5);
-            Vector b = new Vector().ToXaxisWCS();
-        }
-
-
     }
 }

@@ -109,5 +109,11 @@ namespace TeklaExtensionMethods
         {
             return beam.XVector().getReferenceVector();
         }
+
+        public static void RotateBy(this Beam beam, double angleInRadians, Vector a)
+        {
+            Matrix matrix = MatrixFactory.Rotate(angleInRadians, a);
+            beam.TransformByMutation(matrix);
+        }
     }
 }

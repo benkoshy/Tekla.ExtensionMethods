@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,11 @@ namespace TeklaExtensionMethods
         public static Vector ProjectOnto(this Vector a, Vector b)
         {
             return (a.Dot(b)) / (b.Dot(b)) * b;
+        }
+
+        public static Vector RejectFrom(this Vector a, Vector b)
+        {
+            return a.Subtract(a.ProjectOnto(b));
         }
 
         // we need operator overloads for this.
@@ -195,6 +201,23 @@ namespace TeklaExtensionMethods
         private static bool isXVectorEqualToGlobalZVector(this Vector inputBeamXVector)
         {
             return inputBeamXVector.IsCollinearTo(VectorExtensions.ZAxis);
+        }
+
+        /// <summary>
+        /// Delegation method
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static double GetAngleTo(this Vector a, Vector b)
+        {
+            return a.GetAngleBetween(b);
+        }
+
+        public static Vector RotateBy(this Vector a, double angleInRadians, Vector b)
+        {
+            // delegate to Point and return a vector
+            return a.ToPoint().RotateBy(angleInRadians, b).ToVector();
         }
     }
 }

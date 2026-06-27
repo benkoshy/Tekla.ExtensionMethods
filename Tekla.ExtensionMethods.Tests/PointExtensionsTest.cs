@@ -29,5 +29,16 @@ namespace Tests
         {
             Point point = new Point(float.NaN, float.NaN);
         }
+
+        [Test]
+        public void Rotate_1Clockwise_45Degrees()
+        {
+            Point x = VectorExtensions.AxisX.ToPoint();
+            double angle = Math.PI / 4;
+
+            Point rotatedVector = x.RotateBy(angle, new Vector().ToZaxisWCS());
+
+            Assert.That(rotatedVector, Is.EqualTo(new Point(Math.Sqrt(0.5),-Math.Sqrt(0.5), 0)));
+        }
     }
 }
