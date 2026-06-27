@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
+using System.Runtime.CompilerServices;
 using Tekla.Structures.Geometry3d;
 using TeklaExtensionMethods;
 
@@ -115,7 +116,7 @@ namespace Tests
         [Test]
         public void XAxis_ReturnsXAxis()
         {
-            ClassicAssert.AreEqual(new Vector(1, 0, 0), new Vector().XaxisWCS());
+            ClassicAssert.AreEqual(new Vector(1, 0, 0), new Vector().ToXaxisWCS());
             ClassicAssert.AreEqual(new Vector(1, 0, 0), VectorExtensions.XAxis);
             ClassicAssert.AreEqual(new Vector(1, 0, 0), VectorExtensions.AxisX);
         }
@@ -123,7 +124,7 @@ namespace Tests
         [Test]
         public void YAxis_ReturnsYAxis()
         {
-            ClassicAssert.AreEqual(new Vector(0, 1, 0), new Vector().YaxisWCS());
+            ClassicAssert.AreEqual(new Vector(0, 1, 0), new Vector().ToYaxisWCS());
             ClassicAssert.AreEqual(new Vector(0, 1, 0), VectorExtensions.AxisY);
             ClassicAssert.AreEqual(new Vector(0, 1, 0), VectorExtensions.YAxis);
         }
@@ -131,7 +132,7 @@ namespace Tests
         [Test]
         public void ZAxis_ReturnsZAxis()
         {
-            ClassicAssert.AreEqual(new Vector(0, 0, 1), new Vector().ZaxisWCS());
+            ClassicAssert.AreEqual(new Vector(0, 0, 1), new Vector().ToZaxisWCS());
             ClassicAssert.AreEqual(new Vector(0, 0, 1), VectorExtensions.AxisZ);
             ClassicAssert.AreEqual(new Vector(0, 0, 1), VectorExtensions.ZAxis);
         }
@@ -225,5 +226,16 @@ namespace Tests
         }
 
         #endregion       
+
+        [Test]
+        public void ProjectOnto_Returns_3()
+        {
+            Vector a = new Vector(3,4,5);
+            Vector b = new Vector().ToXaxisWCS();
+
+            
+        }
+
+
     }
 }

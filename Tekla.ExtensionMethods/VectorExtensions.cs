@@ -84,18 +84,33 @@ namespace TeklaExtensionMethods
 
             return newVector;
         }
+        /// <summary>
+        /// What ever the vector was, it is now a WCS (World Coordinate System) x axix vector
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns>Vector</returns>
 
-        public static Vector XaxisWCS(this Vector vector)
+        public static Vector ToXaxisWCS(this Vector vector)
         {
             return XAxis;
         }
 
-        public static Vector YaxisWCS(this Vector vector)
+        /// <summary>
+        /// /// What ever the vector was, it is now a WCS (World Coordinate System) y axix vector
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns>Vector</returns>
+        public static Vector ToYaxisWCS(this Vector vector)
         {
             return YAxis;
         }
 
-        public static Vector ZaxisWCS(this Vector vector)
+        /// <summary>
+        /// /// What ever the vector was, it is now a WCS (World Coordinate System) z axix vector
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns>Vector</returns>
+        public static Vector ToZaxisWCS(this Vector vector)
         {
             return ZAxis;
         }
