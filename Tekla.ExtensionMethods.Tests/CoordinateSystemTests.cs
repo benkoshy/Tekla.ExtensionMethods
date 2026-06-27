@@ -264,9 +264,69 @@ namespace Tekla.ExtensionMethods.Tests
         public void WithRotationBy_RotateZAxis90Degrees()
         {
             CoordinateSystem expected = new CoordinateSystem().WithAxisX(new Vector(0, -1000, 0)).WithYaxis(new Vector(1000, 0, 0));                              
-            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(Math.PI / 2, new Vector().ToZaxisWCS());
+            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(Math.PI / 2, VectorExtensions.ZAxis);
 
             Assert.That(rotatedCS, Is.EqualTo(expected).UsingPropertiesComparer());
         }
+
+        [Test]
+        public void WithRotationBy_RotateZAxis180Degrees()
+        {
+            CoordinateSystem expected = new CoordinateSystem().WithAxisX(new Vector(-1000, 0, 0)).WithYaxis(new Vector(0, -1000, 0));
+            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(Math.PI, VectorExtensions.ZAxis);
+
+            Assert.That(rotatedCS, Is.EqualTo(expected).UsingPropertiesComparer());
+        }
+
+
+        [Test]
+        public void WithRotationBy_RotateZAxis90DegreesAntiClockwise()
+        {
+            CoordinateSystem expected = new CoordinateSystem().WithAxisX(new Vector(0, 1000, 0)).WithYaxis(new Vector(-1000, 0, 0));
+            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(- Math.PI / 2, VectorExtensions.ZAxis);
+
+            Assert.That(rotatedCS, Is.EqualTo(expected).UsingPropertiesComparer());
+        }
+
+
+        [Test]
+        public void WithRotationBy_RotateZAxis180DegreesAntiClockwise()
+        {
+            CoordinateSystem expected = new CoordinateSystem().WithAxisX(new Vector(-1000, 0, 0)).WithYaxis(new Vector(0, -1000, 0));
+            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(-Math.PI, VectorExtensions.ZAxis);
+
+            Assert.That(rotatedCS, Is.EqualTo(expected).UsingPropertiesComparer());
+        }
+
+        [Test]
+        public void WithRotationBy_RotateXAxis90Degrees()
+        {
+            CoordinateSystem expected = new CoordinateSystem().WithYaxis(new Vector(0, 0, -1000));
+            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(Math.PI / 2, VectorExtensions.XAxis);
+
+            Assert.That(rotatedCS, Is.EqualTo(expected).UsingPropertiesComparer());
+        }
+
+
+        [Test]
+        public void WithRotationBy_RotateXAxis180Degrees()
+        {
+            CoordinateSystem expected = new CoordinateSystem().WithYaxis(new Vector(0, -1000, 0));
+            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(Math.PI, VectorExtensions.XAxis);
+
+            Assert.That(rotatedCS, Is.EqualTo(expected).UsingPropertiesComparer());
+        }
+
+
+        [Test]
+        public void WithRotationBy_RotateXAxis90DegreesAntiClockwise()
+        {
+            CoordinateSystem expected = new CoordinateSystem().WithYaxis(new Vector(0, 0, 1000));
+            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(-1 * Math.PI / 2, VectorExtensions.XAxis);
+
+            Assert.That(rotatedCS, Is.EqualTo(expected).UsingPropertiesComparer());
+        }
+
+
     }
 }

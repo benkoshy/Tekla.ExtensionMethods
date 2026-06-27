@@ -196,9 +196,8 @@ namespace Tekla.ExtensionMethods.Tests
 
             }
         }
-        
-        
-        
+
+
 
         [Test]
         [Ignore("This is purely a developer experiment")]
