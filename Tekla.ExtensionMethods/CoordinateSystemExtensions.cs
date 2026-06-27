@@ -11,7 +11,7 @@ namespace TeklaExtensionMethods
     public static class CoordinateSystemExtensions
     {
         /// <summary>
-        /// Returns transformation matrix to get this coordinate system to a Global coordinate system.  
+        /// Returns transformation rotation to get this coordinate system to a Global coordinate system.  
         /// All coordinate systems will be normalised.
         /// </summary>
         /// <param name="coordinateSystem"></param>
@@ -23,7 +23,7 @@ namespace TeklaExtensionMethods
 
         /// <summary>
         /// This is the equivalent of the MatrixFactory.ToCoordinateSystem(coordinateSystem) method
-        /// Gets a matrix that allows a transformation from the world coordinate system to the receiver's coordinate system.
+        /// Gets a rotation that allows a transformation from the world coordinate system to the receiver's coordinate system.
         /// </summary>
         /// <param name="coordinateSystem"></param>
         /// <returns></returns>
@@ -149,6 +149,7 @@ namespace TeklaExtensionMethods
 
         /// <summary>
         /// TODO: - add warnings on how this should be done properly
+        /// OR Force the two vectors to be orthogonal!
         /// </summary>
         /// <param name="coordinateSystem"></param>
         /// <param name="yAxis"></param>
@@ -157,6 +158,22 @@ namespace TeklaExtensionMethods
         {
             CoordinateSystem newCoordinateSystem = coordinateSystem.Clone();
             newCoordinateSystem.AxisY = yAxis;
+
+            return newCoordinateSystem;
+        }
+
+        public static CoordinateSystem WithRotationBy(this CoordinateSystem coordinateSystem, double rotationInRadians, Vector vector )
+        {   
+            Matrix rotation = MatrixFactory.Rotate(rotationInRadians, vector);
+
+            CoordinateSystem newCoordinateSystem = coordinateSystem.Clone();
+
+            Point newOrigin = coordinateSystem.Origin.Transform(rotation);
+            Vector newX = coordinateSystem.AxisX.Transform(rotation);
+            Vector newY = coordinateSystem.AxisY.Transform(rotation);
+
+            newCoordinateSystem.AxisX = newX;
+            newCoordinateSystem.AxisY = newY;            
 
             return newCoordinateSystem;
         }

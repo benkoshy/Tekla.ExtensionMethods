@@ -3,6 +3,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
+using Tekla.Structures.Model.Operations;
 
 namespace TeklaExtensionMethods
 {

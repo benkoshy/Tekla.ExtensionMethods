@@ -160,7 +160,6 @@ namespace Tekla.ExtensionMethods.Tests
                 // do some mental gymnastic to work out a coordinate system transformation 
                 // or would you rather say - I want to rotate this beam around the "x" axis and then be done with it?
                 // I know what I would prefer!
-
                 Beam beam_moved_by_operation = beamFactory(new Point(), endPointFactory(), "1", "UB150*14"); // we need factory methods because the same points mutate
                 beam_moved_by_operation.Insert(); 
                 Operation.MoveObject(beam_moved_by_operation, new CoordinateSystem(), new CoordinateSystem().WithAxisY(new Vector(0,1,1)));
@@ -171,11 +170,23 @@ namespace Tekla.ExtensionMethods.Tests
                 beam_moved_geometrically.Insert();
                 beam_moved_geometrically.Select();
              
-                beam_moved_geometrically.RotateBy(Math.PI / 4, new Vector().ToXaxisWCS()); // and we rotate around the x axis - and the beam_moved_geometrically should flip!
+                beam_moved_geometrically.RotateBy(Math.PI / 4, new Vector().ToXaxisWCS()); // and we rotate around the x axis - and the beam_moved_geometrically should flip!                
+
                 beam_moved_geometrically.Modify();
                 beam_moved_geometrically.Select();
 
-                Assert.That(beam_moved_by_operation.GetCoordinateSystem(), Is.EqualTo(beam_moved_geometrically.GetCoordinateSystem()).UsingPropertiesComparer());
+                Assert.That(beam_moved_geometrically.GetCoordinateSystem(), Is.EqualTo(beam_moved_by_operation.GetCoordinateSystem()).UsingPropertiesComparer());
+
+                // or we cam delegate operations to tekla.
+                Beam beam3 = beamFactory(new Point(), endPointFactory(), "4", "UB150*14"); // draw on the x axis
+                beam3.Insert();
+                beam3.Select();
+
+                beam3.RotateBy(Math.PI / 4, new Vector().ToXaxisWCS()); 
+                beam3.Modify();
+                beam3.Select();
+
+                Assert.That(beam3.GetCoordinateSystem(), Is.EqualTo(beam_moved_by_operation.GetCoordinateSystem()).UsingPropertiesComparer());
 
                 model.CommitChanges();
 

@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using NUnit.Framework.Legacy;
+using System;
 using Tekla.Structures.Geometry3d;
 using TeklaExtensionMethods;
 
@@ -260,11 +261,10 @@ namespace Tekla.ExtensionMethods.Tests
 
 
         [Test]
-        public void WithRotationBy_RotateXAxis45Degrees()
+        public void WithRotationBy_RotateZAxis90Degrees()
         {
-            CoordinateSystem expected = new CoordinateSystem().WithAxisY(new Vector(0, 1, -1));
-
-            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(Math.PI / 4, new Vector().ToXaxisWCS());
+            CoordinateSystem expected = new CoordinateSystem().WithAxisX(new Vector(0, -1000, 0)).WithYaxis(new Vector(1000, 0, 0));                              
+            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(Math.PI / 2, new Vector().ToZaxisWCS());
 
             Assert.That(rotatedCS, Is.EqualTo(expected).UsingPropertiesComparer());
         }

@@ -72,6 +72,7 @@
     <Compile Include="GeometricPlaneExtensions.cs" />
     <Compile Include="GridExtensions.cs" />
     <Compile Include="Helpers\Line3d.cs" />
+    <Compile Include="ModelObjectExtensions.cs" />
     <Compile Include="Wrappers\GridWrapper.cs" />
     <Compile Include="Wrappers\IGrid.cs" />
     <Compile Include="LineExtensions.cs" />
