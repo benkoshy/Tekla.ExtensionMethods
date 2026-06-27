@@ -198,9 +198,9 @@ namespace Tekla.ExtensionMethods.Tests
 
         [Test]
         [Ignore("This is purely a developer experiment")]
-        public void TestTransformByOperation()
+        public void DeveloperExperiment_TestTransformByOperation()
         {
-            // Is moving object Operation.MoveObject(beam1_moved_by_operation, cs1, cs2);
+            // Is moving object Operation.MoveObject(beam, cs1, cs2);
             // simply a matter of aligning coordinate systems?
             // No - it is not a matter of aligning Coordinate Systems.
             // It is more akin to moving from Object To Object.
@@ -235,6 +235,32 @@ namespace Tekla.ExtensionMethods.Tests
             }
         }
 
+        [Test]
+        [Ignore("This is purely a developer experiment")]
+        public void DeveloperExperiment_TestMutationOfPointsWhenApplyingMoveOperations()
+        {
+            Model model = new Model();
+
+            if (model.GetConnectionStatus())
+            {
+                CoordinateSystem cs1 = getCoordinateSystem1();
+                CoordinateSystem cs2 = getCoordinateSystem2();
+
+                // move by operation
+                Point startPoint = new Point(300, 0, 0);
+                Point endPoint = new Point(400, 0, 0);
+
+                Beam beam = beamFactory(startPoint, endPoint, "1"); // we need factory methods because the same points mutate
+                beam.Insert();
+                Operation.MoveObject(beam, cs1, cs2);
+                beam.Select(); // gray       
+                    
+                model.CommitChanges();
+                
+                Assert.That(startPoint, Is.Not.EqualTo(new Point(300, 0, 0))); // They should be equal!
+                Assert.That(endPoint, Is.Not.EqualTo(new Point(400, 0, 0)));   // They Should be equal!
+            }
+        }
     }
 }
 
