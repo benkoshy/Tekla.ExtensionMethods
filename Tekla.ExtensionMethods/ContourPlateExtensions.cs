@@ -12,6 +12,9 @@ namespace TeklaExtensionMethods
     {
         /// <summary>
         /// Returns a new contourPlate that is the same, but transformed
+        /// TODO: this will not handle complex rotations.
+        /// We can delegate this to Tekla's move method
+        /// and it should handle everything automatically.
         /// </summary>
         /// <param name="contourPlate"></param>
         /// <param name="matrix"></param>
