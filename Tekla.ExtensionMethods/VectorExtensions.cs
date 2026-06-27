@@ -11,7 +11,7 @@ namespace TeklaExtensionMethods
 {
     public static class VectorExtensions
     {
-        public static Vector ProjectionOnto(this Vector a, Vector b)
+        public static Vector ProjectOnto(this Vector a, Vector b)
         {
             return (a.Dot(b)) / (b.Dot(b)) * b;
         }

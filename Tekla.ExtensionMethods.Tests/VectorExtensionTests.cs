@@ -73,7 +73,7 @@ namespace Tests
 
             Vector xVector = new Vector(1, 0, 0);
 
-            Vector projectionVector = diagonal.ProjectionOnto(xVector);
+            Vector projectionVector = diagonal.ProjectOnto(xVector);
 
             ClassicAssert.AreEqual(projectionVector, xVector);
         }
@@ -232,8 +232,6 @@ namespace Tests
         {
             Vector a = new Vector(3,4,5);
             Vector b = new Vector().ToXaxisWCS();
-
-            
         }
 
 
