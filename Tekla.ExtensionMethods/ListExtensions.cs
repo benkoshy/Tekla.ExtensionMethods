@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
 
-using System.Linq;
-
 namespace TeklaExtensionMethods
 {
     public static class ListExtensions
