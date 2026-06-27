@@ -192,6 +192,49 @@ namespace Tekla.ExtensionMethods.Tests
 
             }
         }
+        
+        
+        
+
+        [Test]
+        [Ignore("This is purely a developer experiment")]
+        public void TestTransformByOperation()
+        {
+            // Is moving object Operation.MoveObject(beam1_moved_by_operation, cs1, cs2);
+            // simply a matter of aligning coordinate systems?
+            // No - it is not a matter of aligning Coordinate Systems.
+            // It is more akin to moving from Object To Object.
+
+            Model model = new Model();
+
+            if (model.GetConnectionStatus())
+            {
+                CoordinateSystem cs1 = getCoordinateSystem1();
+                CoordinateSystem cs2 = getCoordinateSystem2();
+
+                // move by operation
+                Beam beam1_moved_by_operation = beamFactory(startPointFactory(), endPointFactory(), "1"); // we need factory methods because the same points mutate
+                beam1_moved_by_operation.Insert();
+                Operation.MoveObject(beam1_moved_by_operation, cs1, cs2);
+                beam1_moved_by_operation.Select(); // gray       
+
+                // set up second beam_moved_geometrically
+                Beam beam2manuallyTransformed = beamFactory(startPointFactory(), endPointFactory(), "2"); // orange class string            
+                beam2manuallyTransformed.Insert();
+
+                Matrix matrix =  MatrixFactory.ByCoordinateSystems(getCoordinateSystem1(), getCoordinateSystem2());
+
+                beam2manuallyTransformed.StartPoint = startPointFactory().Transform(matrix);
+                beam2manuallyTransformed.Modify();
+                beam2manuallyTransformed.Select(); // update memory                        
+                model.CommitChanges();
+
+                ClassicAssert.AreEqual(beam1_moved_by_operation.StartPoint, beam2manuallyTransformed.StartPoint);
+                ClassicAssert.AreEqual(beam1_moved_by_operation.EndPoint, beam2manuallyTransformed.EndPoint);
+                Assert.That(beam2manuallyTransformed.Position.RotationOffset, Is.EqualTo(beam1_moved_by_operation.Position.RotationOffset).Within(0.1));
+            }
+        }
+
     }
 }
 
