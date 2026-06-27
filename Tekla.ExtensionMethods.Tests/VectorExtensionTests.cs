@@ -224,6 +224,6 @@ namespace Tests
             Assert.That(VectorExtensions.YAxis.Cross(VectorExtensions.XAxis), Is.EqualTo(-1 * VectorExtensions.ZAxis));
         }
 
-        #endregion
+        #endregion       
     }
 }

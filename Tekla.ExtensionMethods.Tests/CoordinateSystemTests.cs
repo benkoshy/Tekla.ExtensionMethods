@@ -2,7 +2,6 @@
 using NUnit.Framework.Legacy;
 using Tekla.Structures.Geometry3d;
 using TeklaExtensionMethods;
-using TeklaExtensionMethods;
 
 namespace Tekla.ExtensionMethods.Tests
 {
