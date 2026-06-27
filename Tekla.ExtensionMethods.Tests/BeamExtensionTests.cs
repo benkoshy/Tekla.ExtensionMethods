@@ -148,8 +148,12 @@ namespace Tekla.ExtensionMethods.Tests
             model.CommitChanges();
         }
 
+        /// <summary>
+        /// This is to be used for a blog post!
+        /// </summary>
         [Test]
-        public void RotateBeam()
+        [Ignore("Developer Test")]
+        public void DeveloperTest_RotateBeam()
         {
             Model model = new Model();
 
