@@ -257,5 +257,16 @@ namespace Tekla.ExtensionMethods.Tests
             Matrix csMatrix = cs.FromWorldCoordinateSystemToReceiverCoordinateSystem();
             ClassicAssert.AreEqual(z, csMatrix.ThirdColumn());
         }
+
+
+        [Test]
+        public void WithRotationBy_RotateXAxis45Degrees()
+        {
+            CoordinateSystem expected = new CoordinateSystem().WithAxisY(new Vector(0, 1, -1));
+
+            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(Math.PI / 4, new Vector().ToXaxisWCS());
+
+            Assert.That(rotatedCS, Is.EqualTo(expected).UsingPropertiesComparer());
+        }
     }
 }
