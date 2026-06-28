@@ -96,6 +96,8 @@ namespace TeklaExtensionMethods
         /// <summary>
         /// We have found instances where the geometric coordinate system method does not match with the beam's GetCoordinateSystem method 
         /// because the origin may differ.
+        /// TODO: We cannot trust this method. Because the origin does not match with
+        /// Tekla's actual calculated beam coordinates.
         /// </summary>
         /// <param name="beam"></param>
         /// <returns></returns>

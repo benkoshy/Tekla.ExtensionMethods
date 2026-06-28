@@ -264,6 +264,36 @@ namespace Tekla.ExtensionMethods.Tests
                 Assert.That(endPoint, Is.Not.EqualTo(new Point(400, 0, 0)));   // They Should be equal!
             }
         }
+
+        [Test]
+        [Ignore("Developer Test")]
+        public void TestBeamCoordinateSystem()
+        {
+            Model model = new Model();
+
+            if (model.GetConnectionStatus())
+            {
+                
+
+                // move by operation
+                Point startPoint = new Point(0, 0, 0);
+                Point endPoint = new Point(0, 1000, 0);
+
+                Beam beam = beamFactory(startPoint, endPoint, "1", "UB150*14"); // we need factory methods because the same points mutate                                
+                beam.Insert();                
+                beam.Select(); // gray       
+
+                CoordinateSystem beamCS = beam.GetCoordinateSystem(); // TODO: get rid of this method.
+
+                // Origin is 0, 0, -75 ---> which is the width of the beam down by 75.
+                // XAxis = new Vector(0, 1000, 0)
+                // YAxis = new Vector(0, 0, 1000)               
+
+                model.CommitChanges();           
+                
+                Assert.That(beam.GetGeometricCoordinateSystem(), Is.EqualTo(beamCS).UsingPropertiesComparer()); 
+            }
+        }
     }
 }
 
