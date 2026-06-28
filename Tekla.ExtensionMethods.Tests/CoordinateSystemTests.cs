@@ -327,6 +327,24 @@ namespace Tekla.ExtensionMethods.Tests
             Assert.That(rotatedCS, Is.EqualTo(expected).UsingPropertiesComparer());
         }
 
+        [Test]
+        public void WithRotationBy_RotateYAxis90Degrees()
+        {
+            CoordinateSystem expected = new CoordinateSystem().WithAxisX(new Vector(0, 0, 1000));
+            CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(Math.PI / 2, VectorExtensions.YAxis);
 
+            Assert.That(rotatedCS, Is.EqualTo(expected).UsingPropertiesComparer());
+        }
+
+
+        [Test]
+        public void RotateVectorTest()
+        {
+            Vector xVector = new Vector(1, 0, 0);
+
+            Matrix rotation = MatrixFactory.Rotate(Math.PI / 2, VectorExtensions.ZAxis);
+
+            Assert.That(xVector.Transform(rotation), Is.EqualTo(new Vector(0, -1, 0)));
+        }
     }
 }
