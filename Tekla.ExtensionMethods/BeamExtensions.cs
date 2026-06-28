@@ -27,12 +27,23 @@ namespace TeklaExtensionMethods
         /// <param name="toCoordinateSystem"></param>
         public static void TransformByMutationOperation(this Beam beam, CoordinateSystem fromCoordinateSystem, CoordinateSystem toCoordinateSystem)
         {
-            Matrix worldToCS1 = MatrixFactory.ByCoordinateSystems(new CoordinateSystem(), fromCoordinateSystem);
-            Matrix CS2toCS1 = MatrixFactory.ByCoordinateSystems(toCoordinateSystem, fromCoordinateSystem);
-            Matrix cs1ToWorld = MatrixFactory.ByCoordinateSystems(fromCoordinateSystem, new CoordinateSystem());
-            Matrix final = worldToCS1 * CS2toCS1 * cs1ToWorld;
+            Matrix final = FromObjectToObjectTransformationMatrix(fromCoordinateSystem, toCoordinateSystem);
 
             beam.TransformByMutation(final);
+        }
+
+        public static Matrix FromObjectToObjectTransformationMatrix(CoordinateSystem cs1, CoordinateSystem cs2)
+        {
+            Matrix worldToCS1 = MatrixFactory.ByCoordinateSystems(new CoordinateSystem(), cs1);
+            Matrix CS2toCS1 = MatrixFactory.ByCoordinateSystems(cs2, cs1);
+            Matrix cs1ToWorld = MatrixFactory.ByCoordinateSystems(cs1, new CoordinateSystem());
+            Matrix final = worldToCS1 * CS2toCS1 * cs1ToWorld;
+            return final;
+        }
+
+        public static void TransformByMoveObjectOperation(this Beam beam, Matrix matrix)
+        {
+            Operation.MoveObject(beam, new CoordinateSystem(), matrix.FromWorlCoordinatSystemToLocalCoordinateSystem());
         }
 
         private static double getAngleInDegrees(Vector beamVectorX, Vector zVector)

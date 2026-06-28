@@ -197,8 +197,6 @@ namespace Tekla.ExtensionMethods.Tests
             }
         }
 
-
-
         [Test]
         [Ignore("This is purely a developer experiment")]
         public void DeveloperExperiment_TestTransformByOperation()
@@ -273,8 +271,6 @@ namespace Tekla.ExtensionMethods.Tests
 
             if (model.GetConnectionStatus())
             {
-                
-
                 // move by operation
                 Point startPoint = new Point(0, 0, 0);
                 Point endPoint = new Point(0, 1000, 0);
@@ -294,6 +290,64 @@ namespace Tekla.ExtensionMethods.Tests
                 Assert.That(beam.XVector().GetGeometricCoordinateSystem(), Is.EqualTo(beamCS).UsingPropertiesComparer()); // TODO: fix this. Ignore the origins because we cannot compare them.
             }
         }
+
+        [Test]        
+        public void TransformByMoveOperation_TestMovingFromObjectToObjectViaMatrixTransformation()
+        {
+            Model model = new Model();
+
+            if (model.GetConnectionStatus())
+            {
+                CoordinateSystem cs1 = getCoordinateSystem1();
+                CoordinateSystem cs2 = getCoordinateSystem2();
+
+                // move by operation
+                Beam beam1_moved_by_operation = beamFactory(startPointFactory(), endPointFactory(), "1"); // we need factory methods because the same points mutate
+                beam1_moved_by_operation.Insert();
+                Operation.MoveObject(beam1_moved_by_operation, cs1, cs2);
+                beam1_moved_by_operation.Select(); // gray       
+
+                // set up second beam_moved_geometrically
+                Beam beam2manuallyTransformed = beamFactory(startPointFactory(), endPointFactory(), "2"); // orange class string            
+                beam2manuallyTransformed.Insert();
+
+                Matrix matrix = BeamExtensions.FromObjectToObjectTransformationMatrix(cs1, cs2);
+                beam2manuallyTransformed.TransformByMoveObjectOperation(matrix);                
+                beam2manuallyTransformed.Select(); // update memory                        
+                model.CommitChanges();
+
+                ClassicAssert.AreEqual(beam1_moved_by_operation.StartPoint, beam2manuallyTransformed.StartPoint);
+                ClassicAssert.AreEqual(beam1_moved_by_operation.EndPoint, beam2manuallyTransformed.EndPoint);
+                Assert.That(beam2manuallyTransformed.Position.RotationOffset, Is.EqualTo(beam1_moved_by_operation.Position.RotationOffset).Within(0.1));
+            }
+        }
+
+        [Test]
+        public void DeveloperTest_MoveOperation()
+        {
+
+            Model model = new Model();
+
+            if (model.GetConnectionStatus())
+            {
+                Beam Beam1 = new Beam(new Point(0, 0, 0), new Point(3000, 0, 0));
+                Beam1.Profile.ProfileString = "PL10*140";
+                Beam1.Insert();
+
+                Beam Beam2 = new Beam(new Point(3000, 0, 0), new Point(6000, 0, 0));
+                Beam2.Profile.ProfileString = "PL10*140";
+                Beam2.Insert();
+
+                Beam Beam3 = new Beam(new Point(100, 0, 0), new Point(100, 0, 400));
+                Beam3.Profile.ProfileString = "PL10*140";
+                Beam3.Insert();
+
+                Operation.MoveObject(Beam3, Beam1.GetCoordinateSystem(), Beam2.GetCoordinateSystem());
+            }
+
+            model.CommitChanges();
+        }
+
     }
 }
 

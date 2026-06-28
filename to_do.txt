@@ -1,16 +1,19 @@
 https://stackoverflow.com/questions/2055422/how-to-implement-iequalitycomparerpointf-with-tolerance
 
-
 (1) Mirorring Matrices
 (2) Rotation matrix test.
 (3) Blog post on Beam Coordinate Systems. Same as below.
 (4) Blog post on mutation - this is already done. On Tek1.com but must be done on My personal blog posting forum.
 (5) Blog post on rotation of beams. Picture is done. Apply to Tek1.com.au and also my personal blog.
 (6) Apply Transformation to: (a) Contour Plates and (b) PolyBeams.
-
 (7) Then release.
 
-* If someone wants to add transformations for other types of Tekla Parts - they are more than welcome to.
+(8) We can apply transformations via matrices to any Tekla Object for moving it!
+(9) Apply the same for copying objects too and test for them.
+
+(10) We can apply transformations on the matrices themselves. And pass it into the move method.
+
+If someone wants to add transformations for other types of Tekla Parts - they are more than welcome to.
 
 
 
