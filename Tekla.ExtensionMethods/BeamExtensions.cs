@@ -92,22 +92,6 @@ namespace TeklaExtensionMethods
         {
             return beam.XVector();
         }
-
-        /// <summary>
-        /// We have found instances where the geometric coordinate system method does not match with the beam's GetCoordinateSystem method 
-        /// because the origin may differ.
-        /// TODO: We cannot trust this method. Because the origin does not match with
-        /// Tekla's actual calculated beam coordinates.
-        /// </summary>
-        /// <param name="beam"></param>
-        /// <returns></returns>
-        public static CoordinateSystem GetGeometricCoordinateSystem(this Beam beam)
-        {
-            return beam.StartPoint.GetVectorTo(beam.EndPoint).GetGeometricCoordinateSystem()
-                .WithOrigin(beam.StartPoint);            
-        }
-
-
         public static Vector GetReferenceVector(this Beam beam)
         {
             return beam.XVector().getReferenceVector();

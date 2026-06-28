@@ -8,17 +8,3 @@ https://stackoverflow.com/questions/2055422/how-to-implement-iequalitycomparerpo
 (5) Blog post on rotation of beams. Picture is done. Apply to Tek1.com.au and also my personal blog.
 (6) Test the ability to apply general rule transformations to beams.
 
-
-
-
-
-
-
-(7) Get Rid of this method: 
-public static CoordinateSystem GetGeometricCoordinateSystem(this Beam beam)
-{
-    return beam.StartPoint.GetVectorTo(beam.EndPoint).GetGeometricCoordinateSystem()
-        .WithOrigin(beam.StartPoint);            
-}
-
-Because we cannot trust it.
