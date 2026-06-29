@@ -47,11 +47,13 @@
   <ItemGroup>
     <Compile Include="BeamExtensionTests.cs" />
     <Compile Include="CoordinateSystemTests.cs" />
+    <Compile Include="CountourPlateTests.cs" />
     <Compile Include="GeometricPlaneExtensionsTest.cs" />
     <Compile Include="GridExtensionsTest.cs" />
     <Compile Include="MatrixExtensionTests.cs" />
     <Compile Include="PlaneExtensionTests.cs" />
     <Compile Include="PointExtensionsTest.cs" />
+    <Compile Include="PolyBeamTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VectorExtensionTests.cs" />
   </ItemGroup>

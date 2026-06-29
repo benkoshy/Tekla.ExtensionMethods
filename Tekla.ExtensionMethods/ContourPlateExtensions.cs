@@ -12,14 +12,16 @@ namespace TeklaExtensionMethods
     {
         /// <summary>
         /// Returns a new contourPlate that is the same, but transformed
-        /// TODO: this will not handle complex rotations.
-        /// We can delegate this to Tekla's move method
-        /// and it should handle everything automatically.
+        /// WARNING: you must have inserted the contour plate for this to work
+        /// because we need to obtain the contour plate's coordinate system.
         /// </summary>
         /// <param name="contourPlate"></param>
         /// <param name="matrix"></param>
         public static void TransformByMutation(this ContourPlate contourPlate, Matrix matrix)
         {
+            CoordinateSystem contourCoordinateSystem = contourPlate.GetCoordinateSystem();
+            Vector transformedX = contourCoordinateSystem.AxisX.Transform(matrix).GetNormal();
+
             Contour transformedContour = new Contour();
             ContourPoint[] transformedContourPoints = contourPlate.Contour
                                                               .ContourPoints
@@ -36,6 +38,8 @@ namespace TeklaExtensionMethods
             }
 
             contourPlate.Contour = transformedContour;
+
+            contourPlate.Position.RotationOffset = BeamExtensions.getAngleInDegrees(transformedX.getReferenceVector().Transform(matrix), transformedX.getBeamCS_YVectorLength1000().GetNormal());
         }
 
         public static ContourPlate CloneByProperties(this ContourPlate plate)

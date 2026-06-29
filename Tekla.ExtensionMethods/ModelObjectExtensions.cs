@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +11,20 @@ namespace Tekla.ExtensionMethods
 {
     public static class ModelObjectExtensions
     {
-        public static void RotateByOperation(this ModelObject beam, double angleInRadians, Vector a)
+        /// <summary>
+        /// Simply delegates any model object to Tekla's internal MoveObject.
+        /// 
+        /// WARNING: First call beam.Select() BEFORE calling
+        /// beam.Modify() - otherwise you will lose all your changes.
+        /// </summary>
+        /// <param name="beam"></param>
+        /// <param name="cs1"></param>
+        /// <param name="cs2"></param>
+        public static void MoveBy(this ModelObject beam, CoordinateSystem cs1, CoordinateSystem cs2 )
         {
-            Matrix matrix = MatrixFactory.Rotate(angleInRadians, a);
-
-            Operation.MoveObject(beam, new CoordinateSystem(), new CoordinateSystem().WithRotationBy(angleInRadians, a));
+            CoordinateSystem cs1copied = cs1.Clone();
+            CoordinateSystem cs2copied = cs2.Clone();
+            Operation.MoveObject(beam, cs1copied, cs2copied);
         }
     }
 }

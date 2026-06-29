@@ -16,6 +16,79 @@ https://stackoverflow.com/questions/2055422/how-to-implement-iequalitycomparerpo
 If someone wants to add transformations for other types of Tekla Parts - they are more than welcome to.
 
 
+(11) Consider fixing: SetX and SetY ---> because they may not be orthogonal.
+(12) 
+
+	(i) Consider putting move from One Coordinate System to another Coordinate system as a Tekla Extension method.
+	(ii) Applying change of basis from one coordinate system to another - change of basis.
+
+(13) Consider getting rid of Matrix - FirstColumn methods.
+
+
+(14) Rotate matrix.
+
+
+(15) Coordinate System.
+ 	(a) by putting an X Vector in (and only an XVector) then we want the entire thing defined with rotation zero.
+	(b) by putting in an X and Y - then both must work.
+
+
+(a) rotation / mirroring matrices must be applied on:
+(b) ModelObject
+(c) coordinate systems
+(d) matrices themselves.
+
+
+
+
+(i) Matrix:
+	(a) displacement / translate and then
+	(b) mirroring
+
+
+Must test all the rotations.
+
+
+* Get Rid of the ability to rotate around a coordinate system. We will focus purely on matrices.
+
+public static void TransformByMutation(this Beam beam, Matrix matrix)
+{
+    Vector transformedX = beam.XVector().Transform(matrix).GetNormal();
+
+    beam.StartPoint = beam.StartPoint.Transform(matrix);
+    beam.EndPoint = beam.EndPoint.Transform(matrix);
+    
+    beam.Position.RotationOffset = getAngleInDegrees(transformedX.getReferenceVector().Transform(matrix), transformedX.getBeamCS_YVectorLength1000().GetNormal());
+}
+
+
+            ContourPoint point = new ContourPoint(new Point(0, 4000, 0), null);
+            ContourPoint point2 = new ContourPoint(new Point(2000, 4000, 0), null);
+            ContourPoint point3 = new ContourPoint(new Point(0, 6000, 0), null);
+
+AxisX = {(2000.000, 0.000, 0.000)}, Origin = {(0.000, 4000.000, 0.000)}, AxisY = {(0.000, 1000.000, 0.000)}
+    AxisX: {(2000.000, 0.000, 0.000)}
+    Origin: {(0.000, 4000.000, 0.000)}
+    AxisY: {(0.000, 1000.000, 0.000)}
+
+
+
+            ContourPoint point1 = new ContourPoint(new Point(0, 0, 0), null);
+            ContourPoint point2 = new ContourPoint(new Point(6000, 6000, 0), null);
+            ContourPoint point3 = new ContourPoint(new Point(3000, 8000, 0), null);
+            ContourPoint point4 = new ContourPoint(new Point(-2000, 3000, 0), null);
+
+
+Origin is (0, 4000, 0)
+Axis X  will be: 6000
+Axis Y will be: a cross of that.
+
+
+
+AxisX = {(6000.000, 6000.000, 0.000)}, Origin = {(0.000, 0.000, 0.000)}, AxisY = {(-707.107, 707.107, 0.000)}
+    AxisX: {(6000.000, 6000.000, 0.000)}
+    Origin: {(0.000, 0.000, 0.000)}
+    AxisY: {(-707.107, 707.107, 0.000)}
 
 
 

@@ -342,7 +342,7 @@ namespace Tekla.ExtensionMethods.Tests
         {
             Vector xVector = new Vector(1, 0, 0);
 
-            Matrix rotation = MatrixFactory.Rotate(Math.PI / 2, VectorExtensions.ZAxis);
+            Matrix rotation = MatrixExtensions.RotateBy(Math.PI / 2, VectorExtensions.ZAxis);
 
             Assert.That(xVector.Transform(rotation), Is.EqualTo(new Vector(0, -1, 0)));
         }

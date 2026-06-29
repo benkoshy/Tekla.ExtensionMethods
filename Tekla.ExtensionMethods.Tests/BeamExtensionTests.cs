@@ -36,7 +36,7 @@ namespace Tekla.ExtensionMethods.Tests
                 Operation.MoveObject(beam1_moved_by_operation, cs1, cs2);
                 beam1_moved_by_operation.Select(); // gray       
 
-                // set up second beam_moved_geometrically
+                // set up second beamGeometric
                 Beam beam2manuallyTransformed = beamFactory(startPointFactory(), endPointFactory(), "2"); // orange class string            
                 beam2manuallyTransformed.Insert();
 
@@ -51,19 +51,19 @@ namespace Tekla.ExtensionMethods.Tests
             }           
         }
         
-        private static Point endPointFactory()
+        public static Point endPointFactory()
         {
             return new Point(400, 0, 0);
         }
 
-        private static Point startPointFactory()
+        public static Point startPointFactory()
         {
             return new Point(300, 0, 0);
         }
 
-        private static Beam beamFactory(Point startPoint, Point endPoint, string classString = "4", string profileString = "PL10*140")
+        public static Beam beamFactory(Point startPoint, Point endPoint, string classString = "4", string profileString = "PL10*140")
         {
-            // move beam_moved_geometrically 3 by coordinate system.
+            // move beamGeometric 3 by coordinate system.
             Beam beam = new Beam(startPoint, endPoint);
             Material material = new Material();
             material.MaterialString = "250";
@@ -72,7 +72,7 @@ namespace Tekla.ExtensionMethods.Tests
             beam.Class = classString;
             return beam;
         }
-        public CoordinateSystem getCoordinateSystem1()
+        public static CoordinateSystem getCoordinateSystem1()
         {
             CoordinateSystem cs = new CoordinateSystem();
             cs.Origin = new Point(0, 0, 0);
@@ -84,7 +84,7 @@ namespace Tekla.ExtensionMethods.Tests
             return cs;
         }
 
-        public CoordinateSystem getCoordinateSystem2()
+        public static CoordinateSystem getCoordinateSystem2()
         {
             CoordinateSystem cs = new CoordinateSystem();
             cs.Origin = new Point(0, 0, 0);
@@ -119,31 +119,83 @@ namespace Tekla.ExtensionMethods.Tests
         {
             Model model = new Model();
 
-            Beam beam = beamFactory(startPoint, endPoint, "1", "UB150*14");
-            beam.Insert();
-            beam.Select();
+            if (model.GetConnectionStatus())
+            {
+                Beam beam = beamFactory(startPoint, endPoint, "1", "UB150*14");
+                beam.Insert();
+                beam.Select();
 
-            CoordinateSystem beamCS = beam.GetCoordinateSystem().WithOrigin(startPoint); // TODO: Bug -  not sure why the beamCS origin is not zero? Or perhaps the coordinate system origin is set to the workplane?
-            Vector csX = beamCS.AxisX;
-            Vector csY = beamCS.AxisY;
-            Vector csZ = csX.Cross(csY).GetNormal();
+                CoordinateSystem beamCS = beam.GetCoordinateSystem().WithOrigin(startPoint); // TODO: Bug -  not sure why the beamCS origin is not zero? Or perhaps the coordinate system origin is set to the workplane?
+                Vector csX = beamCS.AxisX;
+                Vector csY = beamCS.AxisY;
+                Vector csZ = csX.Cross(csY).GetNormal();
 
-            // Calculated Beam
-            Vector calculatedX = startPoint.GetVectorTo(endPoint);
-            Vector calculatedY = calculatedX.getBeamCS_YVectorLength1000();
-            Vector calculatedZ = calculatedX.getBeamCS_ZVectorNormalized();
+                // Calculated Beam
+                Vector calculatedX = startPoint.GetVectorTo(endPoint);
+                Vector calculatedY = calculatedX.getBeamCS_YVectorLength1000();
+                Vector calculatedZ = calculatedX.getBeamCS_ZVectorNormalized();
 
-            string explanation = $"With startpoint: {startPoint} and endpoint: {endPoint}";
+                string explanation = $"With startpoint: {startPoint} and endpoint: {endPoint}";
 
-            Assert.That(calculatedX, Is.EqualTo(csX), $"Xaxis: {explanation}");
-            Assert.That(calculatedY, Is.EqualTo(csY), $"Yaxis: {explanation}");
-            Assert.That(calculatedZ, Is.EqualTo(csZ), $"Zaxis: {explanation}");
+                Assert.That(calculatedX, Is.EqualTo(csX), $"Xaxis: {explanation}");
+                Assert.That(calculatedY, Is.EqualTo(csY), $"Yaxis: {explanation}");
+                Assert.That(calculatedZ, Is.EqualTo(csZ), $"Zaxis: {explanation}");
 
-            // TODO: geometric beam_moved_geometrically CS must match
-            // but the origin does not match.
-            CoordinateSystem geometricCS = beam.XVector().GetGeometricCoordinateSystem();
+                // TODO: geometric beamGeometric CS must match
+                // but the origin does not match.
+                CoordinateSystem geometricCS = beam.XVector().GetGeometricCoordinateSystem();
 
-            Assert.That(beam.XVector().GetGeometricCoordinateSystem().EqualsWithTolerance(beamCS));            
+                Assert.That(beam.XVector().GetGeometricCoordinateSystem().EqualsWithTolerance(beamCS));
+
+                model.CommitChanges(); 
+            }
+        }
+
+        [Test]        
+        public void TransformByMoveOperation_TestMovingFromObjectToObjectViaMatrixTransformation()
+        {
+            Model model = new Model();
+
+            if (model.GetConnectionStatus())
+            {
+                CoordinateSystem cs1 = getCoordinateSystem1();
+                CoordinateSystem cs2 = getCoordinateSystem2();
+
+                // move by operation
+                Beam beam1_moved_by_operation = beamFactory(startPointFactory(), endPointFactory(), "1"); // we need factory methods because the same points mutate
+                beam1_moved_by_operation.Insert();
+                Operation.MoveObject(beam1_moved_by_operation, cs1, cs2);
+                beam1_moved_by_operation.Select(); // gray       
+
+                // set up second beamGeometric
+                Beam beam2manuallyTransformed = beamFactory(startPointFactory(), endPointFactory(), "2"); // orange class string            
+                beam2manuallyTransformed.Insert();                
+            }
+        }
+
+        [Test]
+        [Ignore("Developer Test")]
+        public void DeveloperTest_MoveOperation()
+        {
+
+            Model model = new Model();
+
+            if (model.GetConnectionStatus())
+            {
+                Beam Beam1 = new Beam(new Point(0, 0, 0), new Point(3000, 0, 0));
+                Beam1.Profile.ProfileString = "PL10*140";
+                Beam1.Insert();
+
+                Beam Beam2 = new Beam(new Point(3000, 0, 0), new Point(6000, 0, 0));
+                Beam2.Profile.ProfileString = "PL10*140";
+                Beam2.Insert();
+
+                Beam Beam3 = new Beam(new Point(100, 0, 0), new Point(100, 0, 400));
+                Beam3.Profile.ProfileString = "PL10*140";
+                Beam3.Insert();
+
+                Operation.MoveObject(Beam3, Beam1.GetCoordinateSystem(), Beam2.GetCoordinateSystem());
+            }
 
             model.CommitChanges();
         }
@@ -151,8 +203,7 @@ namespace Tekla.ExtensionMethods.Tests
         /// <summary>
         /// This is to be used for a blog post!
         /// </summary>
-        [Test]
-        [Ignore("Developer Test")]
+        [Test]        
         public void DeveloperTest_RotateBeam()
         {
             Model model = new Model();
@@ -164,39 +215,61 @@ namespace Tekla.ExtensionMethods.Tests
                 // do some mental gymnastic to work out a coordinate system transformation 
                 // or would you rather say - I want to rotate this beam around the "x" axis and then be done with it?
                 // I know what I would prefer!
-                Beam beam_moved_by_operation = beamFactory(new Point(), endPointFactory(), "1", "UB150*14"); // we need factory methods because the same points mutate
-                beam_moved_by_operation.Insert(); 
-                Operation.MoveObject(beam_moved_by_operation, new CoordinateSystem(), new CoordinateSystem().WithAxisY(new Vector(0,1,1)));
-                beam_moved_by_operation.Select(); // gray       
+                Beam beamOperation = beamFactory(new Point(), endPointFactory(), "1", "UB150*14"); // we need factory methods because the same points mutate
+                beamOperation.Insert();
+
+                CoordinateSystem localCoordinateSystem = new CoordinateSystem().WithAxisY(new Vector(0, 1, 1));
+                
+                Operation.MoveObject(beamOperation, new CoordinateSystem(), localCoordinateSystem);
+                beamOperation.Select(); // gray       
 
 
-                Beam beam_moved_geometrically = beamFactory(new Point(), endPointFactory(), "4", "UB150*14"); // draw on the x axis
-                beam_moved_geometrically.Insert();
-                beam_moved_geometrically.Select();
-             
-                beam_moved_geometrically.RotateBy(Math.PI / 4, new Vector().ToXaxisWCS()); // and we rotate around the x axis - and the beam_moved_geometrically should flip!                
+                // Move the beam geometrically
 
-                beam_moved_geometrically.Modify();
-                beam_moved_geometrically.Select();
+                Beam beamGeometric = beamFactory(new Point(), endPointFactory(), "3", "UB150*14"); // draw on the x axis
+                beamGeometric.Insert();                
+                beamGeometric.RotateByMutation(Math.PI / 4, new Vector().ToXaxisWCS()); // and we rotate around the x axis - and the beamGeometric should flip!                
+                beamGeometric.Modify();
+                beamGeometric.Select();
 
-                Assert.That(beam_moved_geometrically.GetCoordinateSystem(), Is.EqualTo(beam_moved_by_operation.GetCoordinateSystem()).UsingPropertiesComparer());
+                Assert.That(beamGeometric.GetCoordinateSystem(), Is.EqualTo(beamOperation.GetCoordinateSystem()).UsingPropertiesComparer());                                                                                             
 
-                // or we cam delegate operations to tekla.
-                Beam beam3 = beamFactory(new Point(), endPointFactory(), "4", "UB150*14"); // draw on the x axis
-                beam3.Insert();
-                beam3.Select();
+                Beam beam4 = beamFactory(new Point(), endPointFactory(), "5", "UB150*14"); // draw on the x axis               
 
-                beam3.RotateBy(Math.PI / 4, new Vector().ToXaxisWCS()); 
-                beam3.Modify();
-                beam3.Select();
+                beam4.Insert();
 
-                Assert.That(beam3.GetCoordinateSystem(), Is.EqualTo(beam_moved_by_operation.GetCoordinateSystem()).UsingPropertiesComparer());
+                beam4.MoveBy(new CoordinateSystem(), new CoordinateSystem().WithRotationBy(-Math.PI / 4, new Vector().ToXaxisWCS()));
+                beam4.Select();            
 
+                Assert.That(beam4.GetCoordinateSystem(), Is.EqualTo(beamOperation.GetCoordinateSystem()).UsingPropertiesComparer());
+                
                 model.CommitChanges();
-
             }
         }
 
+        /// <summary>
+        /// This is to be used for a blog post!
+        /// </summary>
+        [Test]
+        public void DeveloperTest_DisplacementOfBeam()
+        {
+            Model model = new Model();
+
+            if (model.GetConnectionStatus())
+            {
+                Beam beam4 = beamFactory(new Point(), endPointFactory(), "5", "UB150*14"); // draw on the x axis 
+                beam4.Insert();
+
+                beam4.MoveBy(new CoordinateSystem(), new CoordinateSystem().WithDisplacementBy(new Vector(0,1000,0))); // move the vector up by 100
+                beam4.Select();
+
+                Assert.That(beam4.StartPoint, Is.EqualTo(new Point(0,1000,0)));
+
+                model.CommitChanges();
+            }
+        }
+
+        #region Developer Exeriments
         [Test]
         [Ignore("This is purely a developer experiment")]
         public void DeveloperExperiment_TestTransformByOperation()
@@ -219,11 +292,11 @@ namespace Tekla.ExtensionMethods.Tests
                 Operation.MoveObject(beam1_moved_by_operation, cs1, cs2);
                 beam1_moved_by_operation.Select(); // gray       
 
-                // set up second beam_moved_geometrically
+                // set up second beamGeometric
                 Beam beam2manuallyTransformed = beamFactory(startPointFactory(), endPointFactory(), "2"); // orange class string            
                 beam2manuallyTransformed.Insert();
 
-                Matrix matrix =  MatrixFactory.ByCoordinateSystems(getCoordinateSystem1(), getCoordinateSystem2());
+                Matrix matrix = MatrixFactory.ByCoordinateSystems(getCoordinateSystem1(), getCoordinateSystem2());
 
                 beam2manuallyTransformed.StartPoint = startPointFactory().Transform(matrix);
                 beam2manuallyTransformed.Modify();
@@ -255,9 +328,9 @@ namespace Tekla.ExtensionMethods.Tests
                 beam.Insert();
                 Operation.MoveObject(beam, cs1, cs2);
                 beam.Select(); // gray       
-                    
+
                 model.CommitChanges();
-                
+
                 Assert.That(startPoint, Is.Not.EqualTo(new Point(300, 0, 0))); // They should be equal!
                 Assert.That(endPoint, Is.Not.EqualTo(new Point(400, 0, 0)));   // They Should be equal!
             }
@@ -276,78 +349,50 @@ namespace Tekla.ExtensionMethods.Tests
                 Point endPoint = new Point(0, 1000, 0);
 
                 Beam beam = beamFactory(startPoint, endPoint, "1", "UB150*14"); // we need factory methods because the same points mutate                                
-                beam.Insert();                
+                beam.Insert();
                 beam.Select(); // gray       
 
-                CoordinateSystem beamCS = beam.XVector().GetGeometricCoordinateSystem(); // TODO: get rid of this method.
+                CoordinateSystem beamCS = beam.XVector().GetGeometricCoordinateSystem(); 
 
                 // Origin is 0, 0, -75 ---> which is the width of the beam down by 75.
                 // XAxis = new Vector(0, 1000, 0)
                 // YAxis = new Vector(0, 0, 1000)               
 
-                model.CommitChanges();           
-                
+                model.CommitChanges();
+
                 Assert.That(beam.XVector().GetGeometricCoordinateSystem(), Is.EqualTo(beamCS).UsingPropertiesComparer()); // TODO: fix this. Ignore the origins because we cannot compare them.
             }
         }
 
-        [Test]        
-        public void TransformByMoveOperation_TestMovingFromObjectToObjectViaMatrixTransformation()
-        {
-            Model model = new Model();
-
-            if (model.GetConnectionStatus())
-            {
-                CoordinateSystem cs1 = getCoordinateSystem1();
-                CoordinateSystem cs2 = getCoordinateSystem2();
-
-                // move by operation
-                Beam beam1_moved_by_operation = beamFactory(startPointFactory(), endPointFactory(), "1"); // we need factory methods because the same points mutate
-                beam1_moved_by_operation.Insert();
-                Operation.MoveObject(beam1_moved_by_operation, cs1, cs2);
-                beam1_moved_by_operation.Select(); // gray       
-
-                // set up second beam_moved_geometrically
-                Beam beam2manuallyTransformed = beamFactory(startPointFactory(), endPointFactory(), "2"); // orange class string            
-                beam2manuallyTransformed.Insert();
-
-                Matrix matrix = BeamExtensions.FromObjectToObjectTransformationMatrix(cs1, cs2);
-                beam2manuallyTransformed.TransformByMoveObjectOperation(matrix);                
-                beam2manuallyTransformed.Select(); // update memory                        
-                model.CommitChanges();
-
-                ClassicAssert.AreEqual(beam1_moved_by_operation.StartPoint, beam2manuallyTransformed.StartPoint);
-                ClassicAssert.AreEqual(beam1_moved_by_operation.EndPoint, beam2manuallyTransformed.EndPoint);
-                Assert.That(beam2manuallyTransformed.Position.RotationOffset, Is.EqualTo(beam1_moved_by_operation.Position.RotationOffset).Within(0.1));
-            }
-        }
-
         [Test]
-        public void DeveloperTest_MoveOperation()
+        [Ignore("Developer Test - investigating a beam coordinate system's origin")]
+        public void TestBeamCoordinateSystem_2()
         {
-
             Model model = new Model();
 
             if (model.GetConnectionStatus())
             {
-                Beam Beam1 = new Beam(new Point(0, 0, 0), new Point(3000, 0, 0));
-                Beam1.Profile.ProfileString = "PL10*140";
-                Beam1.Insert();
+                // move by operation
+                Point startPoint = new Point(455, 455, 455);
+                Point endPoint = new Point(600, 1000, -800);
 
-                Beam Beam2 = new Beam(new Point(3000, 0, 0), new Point(6000, 0, 0));
-                Beam2.Profile.ProfileString = "PL10*140";
-                Beam2.Insert();
+                Beam beam = beamFactory(startPoint, endPoint, "1", "UB150*14"); // we need factory methods because the same points mutate                                
+                beam.Insert();
+                beam.Select(); // gray       
 
-                Beam Beam3 = new Beam(new Point(100, 0, 0), new Point(100, 0, 400));
-                Beam3.Profile.ProfileString = "PL10*140";
-                Beam3.Insert();
+                CoordinateSystem beamCS = beam.GetCoordinateSystem();
+                // AxisX = {(145.000, 545.000, -1255.000)}, Origin = {(437.411, 388.890, 424.259)}, AxisY = {(234.520, 881.472, 409.887)}
 
-                Operation.MoveObject(Beam3, Beam1.GetCoordinateSystem(), Beam2.GetCoordinateSystem());
+                Matrix matrix = beamCS.ToWorldCoordinateSystem(); // this is not exactly the start point. Looks like Tekla subtracts something based on the width of the beam
+
+                Point origin = new Point();
+                Point newPoint = origin.Transform(matrix);
+
+                model.CommitChanges();                
             }
-
-            model.CommitChanges();
         }
 
+        #endregion
     }
 }
 

@@ -175,7 +175,7 @@ namespace TeklaExtensionMethods
 
         /// <summary>        
         /// This effectively gives the reference vector for Tekla.
-        //  But it is based on the input vector. If the input vector
+        //  But it is based on the input vector. 
         //  The input vector is always the xVector of the beawm.
         //  If the x vector is NOT parallel to the global z vector, then
         //  the reference vector is the global Z vector.

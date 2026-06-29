@@ -20,7 +20,7 @@ namespace TeklaExtensionMethods
         }
 
         /// <summary>
-        /// Replicates Operation.MoveObject method - basically a copy object to object method - except we are moving the object.
+        /// Replicates Operation.MoveObject method - basically a copy object to object method - except we are moving the object using a matrix transformation
         /// </summary>
         /// <param name="beam"></param>
         /// <param name="fromCoordinateSystem"></param>
@@ -41,23 +41,27 @@ namespace TeklaExtensionMethods
             return final;
         }
 
-        public static void TransformByMoveObjectOperation(this Beam beam, Matrix matrix)
-        {
-            Operation.MoveObject(beam, new CoordinateSystem(), matrix.FromWorlCoordinatSystemToLocalCoordinateSystem());
-        }
-
-        private static double getAngleInDegrees(Vector beamVectorX, Vector zVector)
+        public static double getAngleInDegrees(Vector referenceVector, Vector beamYVector)
         /// <summary>
-        /// TODO: (Vector zVector, Vector beamYVector) should probably be the parameter names
+        ///  This is the angle between a beam's "Y" Axis and the reference vector associated with that beam
         /// </summary>
         /// <param name="zVector"></param>
         /// <param name="beamYVector"></param>
         /// <returns></returns>
         {
-            double angle = beamVectorX.GetAngleBetween(zVector) * (180 / Math.PI);
+            double angle = referenceVector.GetAngleBetween(beamYVector) * (180 / Math.PI);
             return angle;
         }
 
+        /// <summary>
+        /// The Minimum parameters required in order to create a beam.
+        /// </summary>
+        /// <param name="beam"></param>
+        /// <param name="startPoint"></param>
+        /// <param name="endPoint"></param>
+        /// <param name="materialString"></param>
+        /// <param name="profile"></param>
+        /// <returns></returns>
         public static Beam BeamFactory(this Beam beam, Point startPoint, Point endPoint, string materialString, string profile)
         {
             beam.StartPoint = startPoint;
@@ -108,7 +112,7 @@ namespace TeklaExtensionMethods
             return beam.XVector().getReferenceVector();
         }
 
-        public static void RotateBy(this Beam beam, double angleInRadians, Vector a)
+        public static void RotateByMutation(this Beam beam, double angleInRadians, Vector a)
         {
             Matrix matrix = MatrixFactory.Rotate(angleInRadians, a);
             beam.TransformByMutation(matrix);

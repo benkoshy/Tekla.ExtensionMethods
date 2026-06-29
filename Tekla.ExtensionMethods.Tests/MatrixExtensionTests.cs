@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
@@ -57,5 +58,42 @@ namespace Tekla.ExtensionMethods.Tests
 
             ClassicAssert.IsFalse(m.EqualsWithTolerance(m2, 1));
         }
+
+
+        // TODO: test matrix rotation
+        [Test]
+        public static void RotateAroundYAxis_By180Degrees()
+        {
+            Matrix m = MatrixExtensions.RotateBy(Math.PI / 2, VectorExtensions.YAxis  );
+
+            Point origin = new Point(1,0,0).Transform(m);
+
+            Assert.That(origin, Is.EqualTo(new Point(0, 0, 1)));
+        }
+
+
+        [Test]
+        public static void DisplaceBy_1()
+        {
+            Matrix m = MatrixExtensions.DisplaceBy(new Vector().ToXaxisWCS());                            
+
+            Point origin = new Point().Transform(m);
+
+
+            Assert.That(origin, Is.EqualTo(new Point(1, 0, 0)));
+        }
+
+        [Test]
+        public static void ThenDisplaceBy_1()
+        {
+            Matrix m = new Matrix()
+                            .ThenDisplaceBy(new Vector().ToXaxisWCS());
+
+            Point origin = new Point().Transform(m);
+
+
+            Assert.That(origin, Is.EqualTo(new Point(1,0,0)));
+        }
+
     }
 }

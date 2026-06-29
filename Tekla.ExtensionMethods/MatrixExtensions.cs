@@ -25,16 +25,31 @@ namespace TeklaExtensionMethods
             return true;
         }
 
+        /// <summary>
+        /// TODO: consider getting rid of this
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
         public static Vector FirstColumn(this Matrix matrix)
         {
             return new Vector(matrix[0, 0], matrix[1, 0], matrix[2, 0]);
         }
 
+        /// <summary>
+        /// TODO: consider getting rid of this
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
         public static Vector SecondColumn(this Matrix matrix)
         {
             return new Vector(matrix[0, 1], matrix[1, 1], matrix[2, 1]);
         }
 
+        /// <summary>
+        /// TODO: consider getting rid of this
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
         public static Vector ThirdColumn(this Matrix matrix)
         {
             return new Vector(matrix[0, 2], matrix[1, 2], matrix[2, 2]);
@@ -58,6 +73,11 @@ namespace TeklaExtensionMethods
             return new Vector(matrix[3, 0], matrix[3, 1], matrix[3, 2]);
         }
 
+        public static Vector GetDisplacementVector(this Matrix matrix)
+        {
+            return GetTranslation(matrix);
+        }
+
         public static CoordinateSystem FromWorlCoordinatSystemToLocalCoordinateSystem(this Matrix matrix)
         {
             CoordinateSystem coordinateSystem = new CoordinateSystem();
@@ -66,6 +86,32 @@ namespace TeklaExtensionMethods
             coordinateSystem.Origin = matrix.GetTranslation().ToPoint();
 
             return coordinateSystem;
+        }
+
+        public static Matrix RotateBy(double angleInRadians, Vector a)
+        {
+            return MatrixFactory.Rotate(angleInRadians, a);
+        }
+
+
+        /// Transformation matrix methods
+        public static Matrix ThenRotateBy(this Matrix matrix, double angleInRadians, Vector a)
+        {   
+
+            return new Matrix(matrix) * RotateBy(angleInRadians, a);
+        }
+
+        public static Matrix DisplaceBy(Vector displacementVector)
+        {
+            // when we use a displacement vector
+            // we need to set it in reverse when aligning coordinate systems           
+
+            return MatrixFactory.ByCoordinateSystems(new CoordinateSystem(), new CoordinateSystem().WithOrigin((displacementVector * -1).ToPoint()));
+        }
+
+        public static Matrix ThenDisplaceBy(this Matrix matrix, Vector displacementVector)
+        {
+            return new Matrix(matrix) * DisplaceBy(displacementVector);
         }
     }
 }

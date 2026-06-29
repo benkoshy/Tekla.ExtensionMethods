@@ -61,6 +61,12 @@ namespace TeklaExtensionMethods
             return xVector.Cross(yVector);
         }
 
+        /// <summary>
+        /// This method does not mutate.
+        /// </summary>
+        /// <param name="coordinateSystem"></param>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
         public static CoordinateSystem Transform(this CoordinateSystem coordinateSystem, Matrix matrix)
         {
             Point origin = coordinateSystem.Origin;
@@ -162,9 +168,17 @@ namespace TeklaExtensionMethods
             return newCoordinateSystem;
         }
 
+        /// <summary>
+        /// WARNING: If using this to align cooridnate systems. If you want to rotate positively around a vector, because you are aligning coordinate systems,
+        /// you need to apply a negative angle to it instead.!
+        /// </summary>
+        /// <param name="coordinateSystem"></param>
+        /// <param name="rotationInRadians"></param>
+        /// <param name="vector"></param>
+        /// <returns></returns>
         public static CoordinateSystem WithRotationBy(this CoordinateSystem coordinateSystem, double rotationInRadians, Vector vector )
         {   
-            Matrix rotation = MatrixFactory.Rotate(rotationInRadians, vector);
+            Matrix rotation = MatrixFactory.Rotate(rotationInRadians, vector); 
 
             CoordinateSystem newCoordinateSystem = coordinateSystem.Clone();
 
@@ -174,6 +188,18 @@ namespace TeklaExtensionMethods
 
             newCoordinateSystem.AxisX = newX;
             newCoordinateSystem.AxisY = newY;            
+
+            return newCoordinateSystem;
+        }
+
+        public static CoordinateSystem WithDisplacementBy(this CoordinateSystem coordinateSystem, Vector displacementVector)
+        {
+            Matrix rotation = new Matrix().ThenDisplaceBy(displacementVector); // because we are using coordinate systems - the applied must be negative.
+
+            CoordinateSystem newCoordinateSystem = coordinateSystem.Clone();
+
+            Point newOrigin = coordinateSystem.Origin.Transform(rotation);
+            newCoordinateSystem.Origin = newOrigin;
 
             return newCoordinateSystem;
         }
