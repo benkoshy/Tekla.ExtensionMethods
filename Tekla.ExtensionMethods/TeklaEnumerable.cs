@@ -28,9 +28,7 @@ namespace TeklaExtensionMethods
         }
         
         public static List<T> ToTeklaList<T>(this IEnumerator enumerator)
-        {
-            CatalogHandler catalogHandler = new CatalogHandler();
-            
+        {   
             var list = new List<T>();
 
             while (enumerator.MoveNext())
