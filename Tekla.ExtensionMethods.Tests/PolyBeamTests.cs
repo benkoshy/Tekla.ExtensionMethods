@@ -66,5 +66,22 @@ namespace Tekla.ExtensionMethods.Tests
             bool Result = false;
             return polyBeam;
         }
+
+        [Test]
+        public void readmeTests()
+        {
+            Model model = new Model();
+
+            ModelObjectSelector Selector = model.GetModelObjectSelector();
+
+            foreach (ModelObject MO in Selector)
+            {
+                Beam B = MO as Beam;
+                if (B != null)
+                {
+                    Solid solid = B.GetSolid();
+                }
+            }            
+        }
     }
 }

@@ -55,6 +55,7 @@
     <Compile Include="PointExtensionsTest.cs" />
     <Compile Include="PolyBeamTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadmeTests.cs" />
     <Compile Include="VectorExtensionTests.cs" />
   </ItemGroup>
   <ItemGroup>

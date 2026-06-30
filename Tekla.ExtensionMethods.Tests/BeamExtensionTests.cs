@@ -40,7 +40,8 @@ namespace Tekla.ExtensionMethods.Tests
                 Beam beam2manuallyTransformed = beamFactory(startPointFactory(), endPointFactory(), "2"); // orange class string            
                 beam2manuallyTransformed.Insert();
 
-                beam2manuallyTransformed.TransformByMutationOperation(cs1, cs2);
+                Matrix final = BeamExtensions.FromObjectToObjectTransformationMatrix(cs1, cs2);
+                beam2manuallyTransformed.TransformByMutation(final);
                 beam2manuallyTransformed.Modify();
                 beam2manuallyTransformed.Select(); // update memory                        
                 model.CommitChanges();
