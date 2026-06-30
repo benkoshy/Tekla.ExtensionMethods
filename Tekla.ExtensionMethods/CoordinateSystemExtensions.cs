@@ -42,17 +42,6 @@ namespace TeklaExtensionMethods
         {           
             return MatrixFactory.ByCoordinateSystems(coordinateSystem, toCoordinateSystem);
         }
-
-        /// <summary>
-        /// TODO: there needs to be a tolerance value added here.
-        /// </summary>
-        /// <param name="coordinateSystem"></param>
-        /// <returns></returns>
-        public static bool IsGlobalCoordinateSystem(this CoordinateSystem coordinateSystem)
-        {
-            return coordinateSystem.Equals(new CoordinateSystem());
-        }
-
         public static Vector AxisZ(this CoordinateSystem coordinateSystem)
         {
             Vector xVector = coordinateSystem.AxisX;
@@ -87,7 +76,11 @@ namespace TeklaExtensionMethods
                 && coordinateSystem.AxisY.EqualsWithTolerance(other.AxisY, tolerance);
         }
 
-        // TODO: find a better name fot his. "Reset" connotes a mutation
+        /// <summary>
+        /// Returns a new coordinate system with origin zero, and unit vectors in the x (1,0,0) and y (0,1,0) directions
+        /// </summary>
+        /// <param name="coordinateSystem"></param>
+        /// <returns></returns>
         public static CoordinateSystem ResetToWorldCoordinateSystem(this CoordinateSystem coordinateSystem)
         {
             return new CoordinateSystem(new Point(0, 0, 0), VectorExtensions.XAxis, VectorExtensions.YAxis);
@@ -128,7 +121,7 @@ namespace TeklaExtensionMethods
         }
 
         /// <summary>
-        /// TODO: - add warnings on how this should be done properly
+        /// Developers should be careful in directly setting the X axis. It should be orthogonal to the Y axis.
         /// </summary>
         /// <param name="coordinateSystem"></param>
         /// <param name="xAxis"></param>
@@ -140,7 +133,7 @@ namespace TeklaExtensionMethods
         }
 
         /// <summary>
-        /// TODO: - add warnings on how this should be done properly
+        /// Developers should be careful in directly setting the X axis. It should be orthogonal to the Y axis.
         /// </summary>
         /// <param name="coordinateSystem"></param>
         /// <param name="yAxis"></param>
@@ -154,8 +147,7 @@ namespace TeklaExtensionMethods
         }
 
         /// <summary>
-        /// TODO: - add warnings on how this should be done properly
-        /// OR Force the two vectors to be orthogonal!
+        /// Developers should be careful in directly setting the Y axis. It should be orthogonal to the Y axis.        
         /// </summary>
         /// <param name="coordinateSystem"></param>
         /// <param name="yAxis"></param>

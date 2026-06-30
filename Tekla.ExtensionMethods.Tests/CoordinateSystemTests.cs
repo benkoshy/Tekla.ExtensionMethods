@@ -12,8 +12,7 @@ namespace Tekla.ExtensionMethods.Tests
         public void WorldCoordinateSystem_True()
         {
             CoordinateSystem cs = CoordinateSystemExtensions.WorldCoordinateSystem();
-
-            // TODO: change all of these to Equals Assert:
+            
             ClassicAssert.IsTrue(cs.Origin.Equals(new Point(0, 0, 0)));
             ClassicAssert.IsTrue(cs.AxisX.Equals(VectorExtensions.XAxis));
             ClassicAssert.IsTrue(cs.AxisY.Equals(VectorExtensions.YAxis));

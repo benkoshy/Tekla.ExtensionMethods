@@ -58,9 +58,7 @@ namespace Tekla.ExtensionMethods.Tests
 
             ClassicAssert.IsFalse(m.EqualsWithTolerance(m2, 1));
         }
-
-
-        // TODO: test matrix rotation
+        
         [Test]
         public static void RotateAroundYAxis_By180Degrees()
         {
