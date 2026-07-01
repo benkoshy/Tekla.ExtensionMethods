@@ -1,4 +1,8 @@
+![NuGet Version](https://img.shields.io/nuget/v/Tekla.ExtensionMethods)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ### What is this?
+
 Extension methods for Tekla's Open API.
 
 
