@@ -145,7 +145,7 @@ Contributions welcome!
 
 If required, add a test.
 
-### Notes fo the Maintainer: Packing Instructions
+### Notes for the Maintainer: Packing Instructions
 
 * Build the solution
 * Update: the assembly version in the csproj file.
