@@ -1,4 +1,4 @@
-![NuGet Version](https://img.shields.io/nuget/v/Tekla.ExtensionMethods)
+[![NuGet Version](https://img.shields.io/nuget/v/Tekla.ExtensionMethods)](https://www.nuget.org/packages/Tekla.ExtensionMethods)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ### What is this?
