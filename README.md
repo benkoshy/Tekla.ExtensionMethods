@@ -33,10 +33,10 @@ CoordinateSystem cs1 = getCoordinateSystem1();
 CoordinateSystem cs2 = getCoordinateSystem2();
 
 // move by operation
-Beam beam1_moved_by_operation = beamFactory(startPointFactory(), endPointFactory(), "1"); // we need factory methods because the same points mutate
-beam1_moved_by_operation.Insert();
-Operation.MoveObject(beam1_moved_by_operation, cs1, cs2);
-beam1_moved_by_operation.Select(); // gray       
+Beam beam = beamFactory(startPointFactory(), endPointFactory(), "1"); // we need factory methods because the same points mutate
+beam.Insert();
+Operation.MoveObject(beam, cs1, cs2);
+beam.Select(); // gray       
 ```
 
 But who wants to formulate a transformation by hand via coordinate system changes in your head.
@@ -46,22 +46,29 @@ What you really want to do is apply a matrix:
 
 ```c#
 
-Beam beam2manuallyTransformed = beamFactory(startPointFactory(), endPointFactory(), "2"); // orange class string            
-beam2manuallyTransformed.Insert();
+Beam beam2 = beamFactory(startPointFactory(), endPointFactory(), "2"); // 
+beam2.Insert();
 
-Matrix final = BeamExtensions.FromObjectToObjectTransformationMatrix(cs1, cs2);
-beam2manuallyTransformed.TransformByMutation(final);  // apply a matrix transformation
-beam2manuallyTransformed.Modify();
-beam2manuallyTransformed.Select(); // update memory                        
+Matrix matrix = BeamExtensions.FromObjectToObjectTransformationMatrix(cs1, cs2);
+beam2.TransformByMutation(matrix);  // apply a matrix transformation
+beam2.Modify();
+beam2.Select(); // update memory                        
 model.CommitChanges();
 ```
 
 But you could apply any transformation that you wanted!
 
 
-### Matrix Extensions
+```c#
+Matrix matrix = new Matrix().RotateBy(Math.PI / 2, VectorExtensions.YAxis) 		    	              
+                       .ThenDisplaceBy(new Vector().ToXaxisWCS());     // curry matrix operations
 
-Helper methods like so
+beam2.TransformByMutation(matrix);  // apply a matrix transformation
+
+```
+
+It's easy to craft matrix operations to do what you want.
+
 ```c#
 Matrix m = new Matrix().RotateBy(Math.PI / 2, VectorExtensions.YAxis) 		    	              
                        .ThenDisplaceBy(new Vector().ToXaxisWCS());     // curry matrix operations
