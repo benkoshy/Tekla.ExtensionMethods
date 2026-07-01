@@ -20,9 +20,14 @@ foreach (ModelObject MO in Selector)
 
 ```
 
+Why force yourself to deal with enumerators? And to then sift for what you want? Try this instead:
+
 #### The New Way:
 ```c#
-            List<Solid> solids = Selector.GetAllObjects().ToTeklaList<Beam>().Select(b => b.GetSolid()).ToList();
+            List<Solid> solids = Selector.GetAllObjects()
+                                         .ToTeklaList<Beam>()  // voila!
+                                         .Select(b => b.GetSolid())
+                                         .ToList();
 ```
 
 ### The Ability To Transform via Matrices:
@@ -98,10 +103,26 @@ Ever wanted a simple projection?
 
 Further handy helpers if you want to use text strings from users, in order to create grid lines.
 
+Or if you wanted the "X Axis" of the "World Coordinate System" (WCS) - a unit vector all you have to do is:
+
+```c#
+Vector x = new Vector().ToXaxisWCS()
+Vector anotherX = VectorExtensions.XAxis;  // same thing
+```
+
+You can even manipulate `CoordinateSystems()` if you wish.
+
+i.e. if you want to rotate a beam 90 degrees around the Y axis you could do this:
+
+```c#
+CoordinateSystem rotatedCS = new CoordinateSystem().WithRotationBy(- Math.PI / 2, VectorExtensions.YAxis);  // negative value
+```
+
+Did you catch that? Because we are using a coordinate system, when applying `Operation.MoveObject(new CoordinateSystem(), rotatedCS)` you will need to make sure you apply the negative value of the angle.
+
+
 Enjoy!
 
-
-### Documentation
 
 #### Installation
 
