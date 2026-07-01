@@ -1,8 +1,5 @@
-<p align="center">
-	[![NuGet Version](https://img.shields.io/nuget/v/Tekla.ExtensionMethods)](https://www.nuget.org/packages/Tekla.ExtensionMethods)
-	[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-</p>
-
+[![NuGet Version](https://img.shields.io/nuget/v/Tekla.ExtensionMethods)](https://www.nuget.org/packages/Tekla.ExtensionMethods)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ### What is this?
 
@@ -148,7 +145,7 @@ Contributions welcome!
 
 If required, add a test.
 
-### Notes for the Maintainer: Packing Instructions
+### Notes fo the Maintainer: Packing Instructions
 
 * Build the solution
 * Update: the assembly version in the csproj file.
