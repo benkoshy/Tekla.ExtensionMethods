@@ -149,6 +149,7 @@ If required, add a test.
 
 * Build the solution
 * Update: the assembly version in the csproj file.
+* Update the GitHub tag matching the same. and push the tag.
 * Update: 
 
 In Powershell:
@@ -156,6 +157,9 @@ In Powershell:
 ```powershell
 D:\\Documents\\repositories\\TeklaProjects\\Tekla.ExtensionMethods\\Tekla.ExtensionMethods> nuget pack -Symbols -SymbolPackageFormat snupkg
 ```
+
+* Then drag and drop into Nuget at the following package [link](https://www.nuget.org/packages/Tekla.ExtensionMethods).
+* Create a new release on the GitHub project and do the same.
 
 
 
