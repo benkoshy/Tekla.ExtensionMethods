@@ -8,7 +8,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <!-- <icon>icon.png</icon> -->
-    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
     <projectUrl>https://github.com/benkoshy/Tekla.ExtensionMethods</projectUrl>
     <description>$description$</description>
     <releaseNotes> A set of Extension and Helpers to be used with the Tekla Open API</releaseNotes>
