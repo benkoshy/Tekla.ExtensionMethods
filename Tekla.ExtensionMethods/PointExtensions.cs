@@ -12,19 +12,19 @@ namespace TeklaExtensionMethods
 {
     public static class PointExtensions
     {
-        public static double GetDistanceTo(this Point fromPoint, Point point)
+        public static double GetDistanceTo(this Point basePoint, Point point)
         {
             return Math.Sqrt(
-                 Math.Pow((point.X - fromPoint.X), 2) +
-                 Math.Pow(point.Y - fromPoint.Y, 2) +
-                 Math.Pow(point.Z - fromPoint.Z, 2)
+                 Math.Pow((point.X - basePoint.X), 2) +
+                 Math.Pow(point.Y - basePoint.Y, 2) +
+                 Math.Pow(point.Z - basePoint.Z, 2)
                  );
         }
 
-        public static Vector GetVectorTo(this Point boltPosition, Point point)
+        public static Vector GetVectorTo(this Point basePoint, Point point)
         {
             Vector originToPoint = new Vector(point);
-            Vector originToBoltPosition = new Vector(boltPosition);
+            Vector originToBoltPosition = new Vector(basePoint);
 
             return originToPoint.Minus(originToBoltPosition);
         }
